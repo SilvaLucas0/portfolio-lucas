@@ -140,7 +140,7 @@
       background: linear-gradient(145deg, rgba(7,11,20,0.95), rgba(10,16,30,0.92));
       border-radius: 30px; padding: 24px;
       display: grid; grid-template-columns: 1.1fr 0.9fr;
-      gap: 24px; overflow: hidden; min-height: 540px; position: relative;
+      gap: 24px; overflow: hidden; min-height: 544px; position: relative;
     }
     .project-viewer::before {
       content: ""; position: absolute; inset: 0;
@@ -182,8 +182,7 @@
 
     @keyframes floatImage { 0% { transform: translateY(0px); } 50% { transform: translateY(-6px); } 100% { transform: translateY(0px); } }
     @keyframes pulseGlow { 0% { transform: scale(1); opacity: 0.7; } 50% { transform: scale(1.08); opacity: 1; } 100% { transform: scale(1); opacity: 0.7; } }
-    .fade-switch { animation: fadeSwitch 0.35s ease; }
-    @keyframes fadeSwitch { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
 
     .timeline { display: grid; gap: 18px; }
     .timeline-item { display: grid; grid-template-columns: 140px 1fr; gap: 24px; padding: 24px; border-radius: 24px; background: var(--card); border: 1px solid var(--border); }
@@ -451,20 +450,11 @@
 
     .viewer-content {
       justify-content: center;
-      transition: opacity 0.24s ease, transform 0.24s ease;
-      will-change: opacity, transform;
     }
 
-    .viewer-image-box {
-      transition: opacity 0.24s ease, transform 0.24s ease;
-      will-change: opacity, transform;
-    }
 
-    .viewer-content.is-switching,
-    .viewer-image-box.is-switching {
-      opacity: 0;
-      transform: translateY(8px);
-    }
+
+
 
     .viewer-top {
       margin-bottom: 14px;
@@ -635,6 +625,637 @@
       }
     }
 
+  
+    /* ── HUB EMBED VARS ── */
+    :root {
+      --hub-bg:#06080f; --hub-panel:#0d1120; --hub-sidebar:#0a0d1a;
+      --hub-card:rgba(255,255,255,0.05); --hub-border:rgba(255,255,255,0.08);
+      --hub-muted:#7a8299;
+      --pink:#e91e8c; --purple-hub:#8b5cf6; --cyan-hub:#00e0ff;
+      --green-hub:#22c55e; --orange-hub:#f59e0b; --red-hub:#ef4444;
+    }
+    @keyframes crmDot { 0%,100%{opacity:1} 50%{opacity:.3} }
+    .crm-hub-embed { display:flex; flex-direction:column; }
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:#06080f;color:#fff;overflow-x:hidden;min-height:100vh}
+
+/* ── VARIABLES ── */
+
+
+/* ── HERO WRAPPER ── */
+.hero-section{
+  min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:60px 24px;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(233,30,140,0.18), transparent 35%),
+    radial-gradient(circle at 80% 10%, rgba(139,92,246,0.18), transparent 35%),
+    radial-gradient(circle at 50% 90%, rgba(0,224,255,0.10), transparent 30%),
+    #06080f;
+  position:relative;overflow:hidden;
+}
+.hero-section::before{
+  content:"";position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h60v60H0z' fill='none'/%3E%3Ccircle cx='1' cy='1' r='1' fill='rgba(255,255,255,0.03)'/%3E%3C/svg%3E");
+  pointer-events:none;
+}
+
+.hero-top{text-align:center;margin-bottom:48px;position:relative;z-index:2}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:7px 16px;border-radius:999px;
+  background:rgba(233,30,140,0.12);border:1px solid rgba(233,30,140,0.3);
+  color:#f06ab5;font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;
+  margin-bottom:20px;
+}
+.hero-badge .dot{width:6px;height:6px;border-radius:50%;background:#e91e8c;box-shadow:0 0 8px #e91e8c;animation:blink 1.5s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+.hero-top h1{
+  font-size:clamp(38px,6vw,68px);font-weight:900;line-height:1;letter-spacing:-2px;margin-bottom:16px;
+}
+.hero-top h1 em{
+  font-style:normal;
+  background:linear-gradient(135deg,var(--pink),var(--purple-hub),var(--cyan-hub));
+  -webkit-background-clip:text;color:transparent;
+}
+.hero-top p{color:var(--hub-muted);font-size:17px;line-height:1.7;max-width:580px;margin:0 auto 28px;}
+.hero-features{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:6px}
+.feat-pill{
+  display:flex;align-items:center;gap:6px;
+  padding:6px 14px;border-radius:999px;
+  border:1px solid var(--hub-border);background:rgba(255,255,255,0.04);
+  font-size:12px;font-weight:600;color:#c4cfdf;
+}
+.feat-pill .ico{font-size:14px}
+
+/* ── SCREEN SHOWCASE ── */
+.crm-hub-embed .showcase-wrap{
+  position:relative;z-index:2;
+  width:100%;max-width:1100px;
+  display:grid;grid-template-columns:220px 1fr;gap:0;
+  border-radius:20px;overflow:hidden;
+  border:1px solid rgba(255,255,255,0.10);
+  box-shadow:0 40px 120px rgba(0,0,0,0.7),0 0 0 1px rgba(255,255,255,0.04);
+  height:100%;
+}
+
+/* ── SIDEBAR ── */
+.hub-sidebar{
+  background:var(--sidebar);
+  border-right:1px solid var(--hub-border);
+  padding:0;display:flex;flex-direction:column;
+}
+.hub-logo{
+  padding:18px 16px;border-bottom:1px solid var(--hub-border);
+  display:flex;align-items:center;gap:10px;
+}
+.hub-logo-icon{
+  width:36px;height:36px;border-radius:10px;flex-shrink:0;
+  background:linear-gradient(135deg,#e91e8c,#8b5cf6);
+  display:flex;align-items:center;justify-content:center;font-size:16px;
+}
+.hub-logo-text strong{display:block;font-size:13px;font-weight:800}
+.hub-logo-text span{font-size:10px;color:var(--hub-muted)}
+.hub-nav{flex:1;padding:12px 8px;display:flex;flex-direction:column;gap:2px}
+.nav-item{
+  display:flex;align-items:center;gap:10px;
+  padding:9px 10px;border-radius:10px;
+  font-size:12px;font-weight:500;color:var(--hub-muted);
+  cursor:pointer;transition:.2s;position:relative;
+}
+.nav-item.active{background:linear-gradient(135deg,rgba(233,30,140,.2),rgba(139,92,246,.2));color:#fff;font-weight:700}
+.nav-item.active::before{content:"";position:absolute;left:0;top:20%;height:60%;width:3px;background:linear-gradient(180deg,var(--pink),var(--purple-hub));border-radius:0 2px 2px 0}
+.nav-item .nav-ico{font-size:14px;width:18px;text-align:center}
+.hub-footer{padding:12px 16px;border-top:1px solid var(--hub-border);font-size:10px;color:var(--hub-muted)}
+
+/* ── MAIN CONTENT AREA ── */
+.hub-main{background:var(--hub-panel);position:relative;overflow:hidden}
+.hub-screen{
+  position:absolute;inset:0;
+  padding:20px 22px;
+  opacity:0;transform:translateX(20px);
+  transition:opacity .55s cubic-bezier(.4,0,.2,1), transform .55s cubic-bezier(.4,0,.2,1);
+  pointer-events:none;
+  overflow:hidden;
+}
+.hub-screen.active{opacity:1;transform:translateX(0);pointer-events:auto}
+.hub-screen.leaving{opacity:0;transform:translateX(-20px)}
+
+.screen-title{font-size:22px;font-weight:800;margin-bottom:4px}
+.screen-sub{font-size:11px;color:var(--hub-muted);margin-bottom:18px}
+
+/* ── STAT CARDS ── */
+.stat-row{display:grid;gap:10px;margin-bottom:14px}
+.stat-row.cols4{grid-template-columns:repeat(4,1fr)}
+.stat-row.cols3{grid-template-columns:repeat(3,1fr)}
+.stat-row.cols2{grid-template-columns:repeat(2,1fr)}
+.stat-card{
+  background:var(--hub-card);border:1px solid var(--hub-border);border-radius:12px;padding:14px;
+  position:relative;overflow:hidden;
+}
+.stat-card::before{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(circle at top right,rgba(255,255,255,.04),transparent 60%);
+}
+.stat-icon{font-size:16px;margin-bottom:8px;opacity:.7}
+.stat-val{font-size:26px;font-weight:900;line-height:1;margin-bottom:3px}
+.stat-lbl{font-size:10px;color:var(--hub-muted);text-transform:uppercase;letter-spacing:.5px}
+.stat-val.pink{color:var(--pink)} .stat-val.purple{color:var(--purple-hub)}
+.stat-val.cyan{color:var(--cyan-hub)} .stat-val.green{color:var(--green-hub)}
+.stat-val.orange{color:var(--orange-hub)} .stat-val.red{color:var(--red-hub)} .stat-val.white{color:#fff}
+
+/* ── ALERT BANNER ── */
+.alert-banner{
+  padding:10px 14px;border-radius:10px;margin-bottom:14px;
+  display:flex;align-items:center;gap:10px;font-size:12px;
+}
+.alert-banner.orange{background:rgba(245,158,11,.10);border:1px solid rgba(245,158,11,.25);color:#fcd34d}
+.alert-banner.pink{background:rgba(233,30,140,.10);border:1px solid rgba(233,30,140,.25);color:#f9a8d4}
+
+/* ── TABLES ── */
+.hub-table{width:100%;border-collapse:collapse;font-size:11px}
+.hub-table th{padding:8px 10px;text-align:left;color:var(--hub-muted);font-weight:600;border-bottom:1px solid var(--hub-border);font-size:10px;text-transform:uppercase;letter-spacing:.5px}
+.hub-table td{padding:8px 10px;border-bottom:1px solid rgba(255,255,255,.04)}
+.status-pill{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:999px;font-size:9px;font-weight:700}
+.status-pill.atrasado{background:rgba(239,68,68,.15);color:#f87171;border:1px solid rgba(239,68,68,.25)}
+.status-pill.ok{background:rgba(34,197,94,.15);color:#4ade80;border:1px solid rgba(34,197,94,.25)}
+.status-pill.pendente{background:rgba(245,158,11,.15);color:#fbbf24;border:1px solid rgba(245,158,11,.25)}
+
+/* ── INFLUENCER CARDS ── */
+.inf-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.inf-card{
+  background:rgba(255,255,255,.04);border:1px solid var(--hub-border);border-radius:12px;padding:12px;
+  border-top:2px solid;
+}
+.inf-card:nth-child(1){border-top-color:var(--pink)}
+.inf-card:nth-child(2){border-top-color:var(--purple-hub)}
+.inf-card:nth-child(3){border-top-color:var(--cyan-hub)}
+.inf-card:nth-child(4){border-top-color:var(--orange-hub)}
+.inf-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.inf-av{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--pink),var(--purple-hub));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;flex-shrink:0}
+.inf-name{font-size:11px;font-weight:700}
+.inf-handle{font-size:9px;color:var(--hub-muted)}
+.inf-tags{display:flex;gap:4px;flex-wrap:wrap}
+.inf-tag{font-size:9px;padding:2px 7px;border-radius:999px;background:rgba(255,255,255,.07);border:1px solid var(--hub-border);color:#c4cfdf}
+.inf-tag.ativa{background:rgba(34,197,94,.12);color:#4ade80;border-color:rgba(34,197,94,.25)}
+.inf-collabs{font-size:9px;color:var(--purple-hub);margin-top:6px}
+
+/* ── CALENDAR ── */
+.cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.cal-nav{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:700}
+.cal-views{display:flex;gap:6px}
+.cal-view-btn{padding:4px 10px;border-radius:7px;font-size:10px;font-weight:600;background:rgba(255,255,255,.05);border:1px solid var(--hub-border);color:var(--hub-muted);cursor:pointer}
+.cal-view-btn.active{background:var(--purple-hub);color:#fff;border-color:var(--purple-hub)}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:var(--hub-border);border-radius:10px;overflow:hidden}
+.cal-day-head{background:var(--hub-panel);padding:6px;text-align:center;font-size:9px;font-weight:700;color:var(--hub-muted);text-transform:uppercase}
+.cal-day{background:#0a0d1a;min-height:56px;padding:4px 5px;position:relative}
+.cal-day.today{background:rgba(233,30,140,.08)}
+.cal-num{font-size:10px;font-weight:700;margin-bottom:3px;color:var(--hub-muted)}
+.cal-day.today .cal-num{color:var(--pink);background:var(--pink);color:#fff;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px}
+.cal-event{font-size:8px;padding:2px 4px;border-radius:3px;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600}
+.cal-event.pink{background:rgba(233,30,140,.25);color:#f9a8d4}
+.cal-event.purple{background:rgba(139,92,246,.25);color:#c4b5fd}
+.cal-event.cyan{background:rgba(0,224,255,.20);color:#a5f3fc}
+.cal-event.green{background:rgba(34,197,94,.20);color:#86efac}
+
+/* ── CHARTS ── */
+.chart-row{display:grid;grid-template-columns:1.4fr .6fr;gap:10px;margin-bottom:10px}
+.chart-box{background:var(--hub-card);border:1px solid var(--hub-border);border-radius:12px;padding:14px}
+.chart-title{font-size:11px;font-weight:700;margin-bottom:12px;color:#e8eef9}
+.line-chart{position:relative;height:80px;overflow:hidden}
+.line-path{position:absolute;bottom:0;left:0;right:0;height:100%}
+svg.chart{width:100%;height:100%;overflow:visible}
+.donut-wrap{display:flex;flex-direction:column;align-items:center;gap:8px}
+.donut-legend{width:100%;font-size:9px;color:var(--hub-muted);display:flex;flex-direction:column;gap:4px}
+.donut-leg-item{display:flex;align-items:center;gap:6px}
+.donut-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+
+/* ── FINANCE ── */
+.fin-rows{display:flex;flex-direction:column;gap:6px}
+.fin-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 12px;border-radius:10px;
+  background:rgba(255,255,255,.03);border:1px solid var(--hub-border);
+}
+.fin-row-left{display:flex;align-items:center;gap:8px}
+.fin-ico{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px}
+.fin-ico.green-bg{background:rgba(34,197,94,.15)}
+.fin-ico.red-bg{background:rgba(239,68,68,.15)}
+.fin-row-name{font-size:12px;font-weight:600}
+.fin-row-date{font-size:10px;color:var(--hub-muted)}
+.fin-amount{font-size:13px;font-weight:800}
+.fin-amount.green{color:var(--green-hub)}
+.fin-amount.red{color:var(--red-hub)}
+
+/* ── ROI ── */
+.roi-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.roi-card{
+  padding:14px;border-radius:12px;border:1px solid var(--hub-border);
+  background:linear-gradient(145deg,rgba(255,255,255,.05),rgba(255,255,255,.02));
+  position:relative;overflow:hidden;
+}
+.roi-card::before{content:"";position:absolute;top:-20px;right:-20px;width:80px;height:80px;border-radius:50%;opacity:.15}
+.roi-card:nth-child(1)::before{background:var(--pink)}
+.roi-card:nth-child(2)::before{background:var(--green-hub)}
+.roi-card:nth-child(3)::before{background:var(--purple-hub)}
+.roi-card:nth-child(4)::before{background:var(--orange-hub)}
+.roi-label{font-size:10px;color:var(--hub-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.roi-val{font-size:22px;font-weight:900}
+.roi-val.pink{color:var(--pink)} .roi-val.green{color:var(--green-hub)} .roi-val.purple{color:var(--purple-hub)} .roi-val.orange{color:var(--orange-hub)}
+.roi-change{font-size:10px;margin-top:4px}
+.roi-bar-wrap{margin-top:6px;height:4px;background:rgba(255,255,255,.08);border-radius:99px;overflow:hidden}
+.roi-bar{height:100%;border-radius:99px;transition:width 1.2s ease}
+.roi-bar.pink{background:linear-gradient(90deg,var(--pink),var(--purple-hub))}
+.roi-bar.green{background:var(--green-hub)}
+.roi-bar.purple{background:var(--purple-hub)}
+.roi-bar.orange{background:var(--orange-hub)}
+
+/* ── IA ASSISTANT ── */
+.ia-window{
+  background:rgba(255,255,255,.03);border:1px solid var(--hub-border);border-radius:12px;
+  overflow:hidden;height:240px;display:flex;flex-direction:column;
+}
+.ia-header{padding:10px 14px;background:rgba(255,255,255,.04);border-bottom:1px solid var(--hub-border);display:flex;align-items:center;gap:8px}
+.ia-av{width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,var(--pink),var(--purple-hub));display:flex;align-items:center;justify-content:center;font-size:12px}
+.ia-name{font-size:11px;font-weight:700}
+.ia-online{font-size:9px;color:var(--green-hub);display:flex;align-items:center;gap:4px}
+.ia-online::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--green-hub);box-shadow:0 0 6px var(--green-hub)}
+.ia-messages{flex:1;overflow:hidden;padding:10px;display:flex;flex-direction:column;gap:6px}
+.ia-msg{max-width:85%;font-size:10px;line-height:1.5;padding:7px 10px;border-radius:10px}
+.ia-msg.bot{background:rgba(139,92,246,.15);border:1px solid rgba(139,92,246,.2);color:#ddd6fe;align-self:flex-start;border-radius:4px 10px 10px 10px}
+.ia-msg.user{background:rgba(233,30,140,.15);border:1px solid rgba(233,30,140,.2);color:#fce7f3;align-self:flex-end;border-radius:10px 4px 10px 10px}
+.ia-msg.typing{background:rgba(139,92,246,.10)}
+.ia-typing{display:inline-flex;gap:3px;align-items:center;padding:2px 0}
+.ia-typing i{width:4px;height:4px;border-radius:50%;background:#a78bfa;animation:iaType 1s infinite;font-style:normal}
+.ia-typing i:nth-child(2){animation-delay:.15s}
+.ia-typing i:nth-child(3){animation-delay:.3s}
+@keyframes iaType{0%,80%,100%{transform:translateY(0);opacity:.4}40%{transform:translateY(-3px);opacity:1}}
+.ia-input{padding:8px 12px;border-top:1px solid var(--hub-border);display:flex;align-items:center;gap:8px}
+.ia-input-box{flex:1;background:rgba(255,255,255,.05);border:1px solid var(--hub-border);border-radius:8px;padding:6px 10px;font-size:10px;color:#fff}
+.ia-send{width:26px;height:26px;border-radius:7px;background:linear-gradient(135deg,var(--pink),var(--purple-hub));display:flex;align-items:center;justify-content:center;font-size:12px;cursor:pointer}
+
+/* ── LEMBRETE CARD ── */
+.reminder-list{display:flex;flex-direction:column;gap:6px}
+.reminder{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 12px;border-radius:10px;
+  background:rgba(255,255,255,.03);border:1px solid var(--hub-border);
+}
+.reminder-ico{width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.reminder-ico.pink-bg{background:rgba(233,30,140,.15)}
+.reminder-ico.orange-bg{background:rgba(245,158,11,.15)}
+.reminder-ico.purple-bg{background:rgba(139,92,246,.15)}
+.reminder-ico.cyan-bg{background:rgba(0,224,255,.15)}
+.reminder-body{flex:1}
+.reminder-title{font-size:11px;font-weight:700}
+.reminder-meta{font-size:9px;color:var(--hub-muted);margin-top:1px}
+.reminder-badge{font-size:9px;padding:3px 8px;border-radius:999px;font-weight:700;flex-shrink:0}
+.reminder-badge.urgente{background:rgba(239,68,68,.15);color:#f87171;border:1px solid rgba(239,68,68,.25)}
+.reminder-badge.hoje{background:rgba(245,158,11,.15);color:#fbbf24;border:1px solid rgba(245,158,11,.25)}
+.reminder-badge.amanha{background:rgba(34,197,94,.15);color:#4ade80;border:1px solid rgba(34,197,94,.25)}
+
+/* ── PROGRESS BAR ANIMATED ── */
+.prog-bar{height:5px;background:rgba(255,255,255,.08);border-radius:99px;overflow:hidden;margin-top:4px}
+.prog-fill{height:100%;border-radius:99px;width:0%;transition:width 1.5s ease .3s}
+
+/* ── SCREEN INDICATOR ── */
+.screen-indicators{
+  display:flex;gap:8px;justify-content:center;margin-top:20px;position:relative;z-index:2;
+}
+.screen-ind{
+  width:28px;height:4px;border-radius:99px;
+  background:rgba(255,255,255,.15);cursor:pointer;transition:all .3s;
+}
+.screen-ind.active{width:48px;background:linear-gradient(90deg,var(--pink),var(--purple-hub))}
+
+/* ── SCREEN LABEL ── */
+.screen-label{
+  text-align:center;margin-top:12px;
+  font-size:12px;color:var(--hub-muted);font-weight:600;
+  position:relative;z-index:2;min-height:18px;
+  transition:opacity .3s;
+}
+
+/* ── BOTTOM FEATURES ── */
+.bottom-features{
+  width:100%;max-width:1100px;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:16px;
+  margin-top:40px;position:relative;z-index:2;
+}
+.bf-card{
+  padding:20px;border-radius:16px;
+  background:rgba(255,255,255,.04);border:1px solid var(--hub-border);
+  transition:.3s;
+}
+.bf-card:hover{transform:translateY(-4px);border-color:rgba(233,30,140,.3)}
+.bf-ico{font-size:24px;margin-bottom:10px}
+.bf-title{font-size:13px;font-weight:700;margin-bottom:6px}
+.bf-desc{font-size:11px;color:var(--hub-muted);line-height:1.6}
+
+/* ── ANIMATIONS ── */
+.count-up{display:inline-block}
+@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.slide-up{animation:slideUp .6s ease both}
+
+/* NUMBER COUNTER */
+@keyframes countUp{from{opacity:0}to{opacity:1}}
+
+
+    /* ── JORNADA MELHORADA ── */
+    .timeline-year {
+      color: var(--primary); font-weight: 900; font-size: 13px;
+      display: flex; flex-direction: column; gap: 6px; padding-top: 2px;
+    }
+    .tl-tag {
+      display: inline-block; padding: 3px 8px; border-radius: 999px;
+      background: rgba(0,224,255,0.10); border: 1px solid rgba(0,224,255,0.22);
+      font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px;
+      color: var(--primary); width: fit-content;
+    }
+    .tl-pills {
+      display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px;
+    }
+    .tl-pills span {
+      padding: 4px 10px; border-radius: 999px; font-size: 11px; font-weight: 600;
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.10);
+      color: #c4cfdf;
+    }
+    .timeline-content h3 { font-size: 17px; margin-bottom: 7px; font-weight: 700; }
+    .timeline-item {
+      transition: border-color .25s;
+    }
+    .timeline-item:hover { border-color: rgba(0,224,255,0.28); }
+
+    /* ── SKILLS GRID ── */
+    .skills-grid {
+      display: grid; grid-template-columns: repeat(4,1fr); gap: 18px; margin-bottom: 40px;
+    }
+    .skill-area {
+      padding: 22px 20px; border-radius: 20px;
+      background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+      transition: .28s ease;
+    }
+    .skill-area:hover {
+      transform: translateY(-4px); border-color: rgba(0,224,255,0.30);
+      background: rgba(0,224,255,0.04);
+    }
+    .skill-area-icon { font-size: 26px; margin-bottom: 12px; }
+    .skill-area-title { font-size: 15px; font-weight: 800; margin-bottom: 8px; color: #fff; }
+    .skill-area-desc { font-size: 13px; line-height: 1.65; color: var(--text-muted); }
+
+    /* ── CLIENTS AREA IMPROVED ── */
+    .clients-area { padding: 24px 28px; border-radius: 24px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); }
+    .clients-area p { color: var(--text-muted); margin-bottom: 18px; font-size: 14px; }
+    .clients-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 12px; }
+    .client-logo {
+      min-height: 76px; border-radius: 16px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; padding: 14px 10px; font-weight: 800; font-size: 13px;
+      color: #fff; background: rgba(255,255,255,0.06); border: 1px solid var(--border);
+      transition: .25s; gap: 4px; line-height: 1.3;
+    }
+    .client-logo span { font-size: 18px; }
+    .client-logo:hover { transform: translateY(-3px); color: var(--primary); border-color: rgba(0,224,255,0.4); background: rgba(0,224,255,0.07); }
+
+    /* ── CONTACT IMPROVED ── */
+    .contact-badge {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 6px 14px; border-radius: 999px; margin-bottom: 18px;
+      background: rgba(34,197,94,0.10); border: 1px solid rgba(34,197,94,0.25);
+      color: #4ade80; font-size: 12px; font-weight: 700; letter-spacing: .3px;
+    }
+    .contact-badge::before {
+      content: ''; width: 7px; height: 7px; border-radius: 50%;
+      background: #22c55e; box-shadow: 0 0 8px #22c55e;
+      animation: blink 1.5s ease-in-out infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+    .contact-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 22px; }
+    .contact-trust {
+      display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;
+      font-size: 12px; color: var(--text-muted); font-weight: 600;
+    }
+    .contact-trust span { display: flex; align-items: center; gap: 5px; }
+
+    /* ── FOOTER IMPROVED ── */
+    .footer-inner {
+      max-width: 1180px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 10px;
+    }
+    .footer-logo { font-weight: 900; font-size: 18px; }
+    .footer-logo span { color: var(--primary); }
+
+    /* ── RESPONSIVE NEW SECTIONS ── */
+    @media (max-width: 900px) {
+      .skills-grid { grid-template-columns: repeat(2,1fr); }
+      .clients-grid { grid-template-columns: repeat(2,1fr); }
+      .contact-trust { gap: 12px; }
+    }
+    @media (max-width: 600px) {
+      .skills-grid { grid-template-columns: 1fr; }
+      .clients-grid { grid-template-columns: repeat(2,1fr); }
+      .tl-pills { gap: 4px; }
+      .tl-pills span { font-size: 10px; padding: 3px 8px; }
+      .footer-inner { justify-content: center; text-align: center; flex-direction: column; gap: 6px; }
+    }
+
+
+    /* ── PROJECT TABS — sem badges, com ícone e seta ── */
+    .proj-tab-icon {
+      width: 38px; height: 38px; border-radius: 12px; flex-shrink: 0;
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.10);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; transition: .25s;
+    }
+    .project-tab.active .proj-tab-icon {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border: none; color: #06101c;
+    }
+    .proj-tab-arrow {
+      margin-left: auto; flex-shrink: 0;
+      color: rgba(255,255,255,0.2); font-size: 16px; transition: .25s;
+    }
+    .project-tab.active .proj-tab-arrow { color: var(--primary); }
+    .project-tab:hover .proj-tab-arrow { color: rgba(255,255,255,0.5); transform: translateX(3px); }
+
+    /* Remove tab-badge from CSS (no longer in HTML but keep definition harmless) */
+    .tab-badge { display: none; }
+
+    /* ── CRM HUB EMBED base — overridden by .crm-mode rules above ── */
+    .crm-hub-embed {
+      border-radius: 18px; overflow: hidden;
+      flex-direction: column;
+    }
+    #crmMockupWrap {
+      flex: 1; overflow: hidden; position: relative;
+    }
+
+    /* ── PROJECT TABS — slide-in animation on active ── */
+    @keyframes tabSlideIn {
+      from { opacity: 0; transform: translateX(-8px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    .project-tab.active { animation: tabSlideIn .3s ease; }
+
+    /* mobile CRM embed */
+    @media (max-width: 1000px) {
+      .crm-hub-embed { position: relative !important; height: 380px !important; }
+    }
+
+
+    /* ══════════════════════════════════════════════════
+       CRM MODE — layout expands when CRM tab is active
+    ══════════════════════════════════════════════════ */
+
+    /* Normal mode: side-by-side (tabs left, viewer right) */
+    /* CRM mode: tabs become horizontal row, hub fills full width */
+
+    .project-showcase.crm-mode {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    /* Tabs become a horizontal row in CRM mode */
+    .project-showcase.crm-mode .project-tabs {
+      flex-direction: row;
+      gap: 10px;
+    }
+    .project-showcase.crm-mode .project-tab {
+      flex: 1;
+      padding: 12px 16px;
+      gap: 10px;
+    }
+    .project-showcase.crm-mode .project-tab strong {
+      font-size: 14px;
+    }
+    .project-showcase.crm-mode .project-tab small {
+      display: none; /* hide subtitle in horizontal mode */
+    }
+
+    /* CRM viewer: full-width, taller */
+    .project-showcase.crm-mode .project-viewer {
+      grid-template-columns: 1fr;
+      min-height: auto;
+      padding: 0;
+      border: none;
+      background: none;
+      gap: 0;
+    }
+    .project-showcase.crm-mode .project-viewer::before { display: none; }
+
+    /* Hub container: full width, no scaling needed */
+    .project-showcase.crm-mode .viewer-image-box {
+      height: auto;
+      min-height: auto;
+      border: none;
+      border-radius: 20px;
+      overflow: hidden;
+      background: transparent;
+    }
+
+    /* CRM embed fills naturally */
+    .project-showcase.crm-mode #crmHubEmbed {
+      position: relative !important;
+      inset: auto !important;
+      width: 100% !important;
+      height: auto !important;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.10);
+      overflow: hidden;
+    }
+
+    /* CRM info panel: show as a bottom strip in crm-mode */
+    .project-showcase.crm-mode .viewer-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+      align-items: start;
+      padding: 20px 24px;
+      background: linear-gradient(145deg, rgba(7,11,20,0.95), rgba(10,16,30,0.92));
+      border: 1px solid var(--border);
+      border-top: none;
+      border-radius: 0 0 20px 20px;
+      margin-top: -4px;
+    }
+    .project-showcase.crm-mode .viewer-top {
+      grid-column: 1 / -1;
+      margin-bottom: 4px;
+    }
+    .project-showcase.crm-mode #projectTitle {
+      grid-column: 1;
+      font-size: 22px;
+      margin-bottom: 4px;
+      align-self: center;
+    }
+    .project-showcase.crm-mode #projectDescription {
+      grid-column: 2;
+      font-size: 13px;
+      line-height: 1.6;
+      margin-bottom: 0;
+      color: var(--text-muted);
+    }
+    .project-showcase.crm-mode #projectTags {
+      display: none; /* hide tags in crm-mode, not enough space */
+    }
+    .project-showcase.crm-mode .viewer-actions {
+      grid-column: 3;
+      flex-direction: column;
+      gap: 8px;
+      justify-content: center;
+    }
+    .project-showcase.crm-mode .viewer-actions .btn {
+      width: 100%;
+      text-align: center;
+      justify-content: center;
+      padding: 10px 16px;
+      font-size: 13px;
+    }
+
+    /* Hub mockup wrapper: NO scaling, natural size */
+    .project-showcase.crm-mode #crmMockupWrap {
+      transform: none !important;
+      width: 100% !important;
+      height: auto !important;
+      max-width: none !important;
+      max-height: none !important;
+    }
+
+    /* showcase-wrap inside CRM embed: full width */
+    .project-showcase.crm-mode .showcase-wrap {
+      width: 100% !important;
+      height: 520px !important;
+      border-radius: 0 !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+
+    /* Smooth transition when switching */
+    .project-showcase {
+      transition: none; /* instant layout switch */
+    }
+
+    /* Mobile: stack everything */
+    @media (max-width: 900px) {
+      .project-showcase.crm-mode .project-tabs {
+        flex-direction: column;
+      }
+      .project-showcase.crm-mode .viewer-content {
+        grid-template-columns: 1fr;
+      }
+      .project-showcase.crm-mode #projectTitle,
+      .project-showcase.crm-mode #projectDescription,
+      .project-showcase.crm-mode .viewer-actions {
+        grid-column: 1;
+      }
+      .project-showcase.crm-mode .showcase-wrap {
+        height: 400px !important;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -646,10 +1267,9 @@
       <div class="logo">Lucas<span>.</span></div>
       <div class="nav-links">
         <a href="#sobre">Sobre</a>
-        <a href="#projetos">Base técnica</a>
         <a href="#showcase-projects">Sistemas</a>
-        <a href="#jornada">Jornada</a>
-        <a href="#skills">Skills</a>
+        <a href="#jornada">Experiência</a>
+        <a href="#skills">Competências</a>
         <a href="#contato">Contato</a>
       </div>
     </nav>
@@ -658,7 +1278,7 @@
   <main class="hero" id="sobre">
     <div class="hero-content reveal">
       <div class="badge">Analista de Sistemas • Automação • Operações Digitais</div>
-      <h1>Eu crio sistemas e automações para <span>transformar operação em resultado.</span></h1>
+      <h1>Transformo processos em <span>sistemas, automações e resultados reais.</span></h1>
       <p>Sou Lucas Silva. Construo soluções digitais para empresas que precisam organizar processos, ganhar velocidade comercial e enxergar a operação com clareza. Minha entrega une visão técnica, execução prática e foco em crescimento.</p>
       <div class="hero-buttons">
         <a href="#showcase-projects" class="btn btn-primary">Ver meus sistemas</a>
@@ -677,42 +1297,7 @@
     </div>
   </main>
 
-  <section id="projetos" class="projects-compact-section">
-    <div class="section-title reveal">
-      <small>Base técnica</small>
-      <h2>Projetos e competências que sustentam minha execução</h2>
-      <p>
-        Além dos sistemas em destaque, minha base vem de projetos técnicos, integrações,
-        automações e organização de dados aplicados em operações reais.
-      </p>
-    </div>
 
-    <div class="projects-compact-grid">
-      <div class="compact-project-card reveal">
-        <span>PACS</span>
-        <h3>PACS Hospitalar</h3>
-        <p>Fluxo digital para exames de imagem, servidor Orthanc, Worklist e visualizadores DICOM.</p>
-      </div>
-
-      <div class="compact-project-card reveal">
-        <span>HUBS</span>
-        <h3>Hubs de Integração</h3>
-        <p>Conexão entre sistemas, organização de fluxos de dados, APIs e automações operacionais.</p>
-      </div>
-
-      <div class="compact-project-card reveal">
-        <span>WPP</span>
-        <h3>Disparo WhatsApp</h3>
-        <p>Estruturas de mensagens, lembretes e comunicação comercial com mais controle.</p>
-      </div>
-
-      <div class="compact-project-card reveal">
-        <span>FIN</span>
-        <h3>Controle Financeiro</h3>
-        <p>Dashboards, indicadores, entradas, saídas e visão clara para tomada de decisão.</p>
-      </div>
-    </div>
-  </section>
 
   <section id="showcase-projects">
     <div class="section-title reveal">
@@ -724,16 +1309,19 @@
     <div class="project-showcase reveal">
       <div class="project-tabs">
         <button class="project-tab active" data-project="directspeed">
-          <span class="tab-badge">01</span>
+          <div class="proj-tab-icon">✈</div>
           <div><strong>DirectSpeed</strong><small>Prospecção e automação no Instagram</small></div>
+          <div class="proj-tab-arrow">→</div>
         </button>
         <button class="project-tab" data-project="wapi">
-          <span class="tab-badge">02</span>
+          <div class="proj-tab-icon">💬</div>
           <div><strong>W-API</strong><small>Lembretes automáticos via WhatsApp</small></div>
+          <div class="proj-tab-arrow">→</div>
         </button>
         <button class="project-tab" data-project="crm">
-          <span class="tab-badge">03</span>
-          <div><strong>CRM para Marcas</strong><small>Dashboard operacional para gestão de influenciadoras</small></div>
+          <div class="proj-tab-icon">🌸</div>
+          <div><strong>CRM para Marcas</strong><small>Dashboard para gestão de influenciadoras</small></div>
+          <div class="proj-tab-arrow">→</div>
         </button>
       </div>
 
@@ -797,6 +1385,460 @@
 
           <!-- Imagem para outros projetos -->
           <img id="projectImage" class="project-preview-img" src="" alt="Preview do projeto" style="display: none;">
+
+          <!-- CRM Hub embed -->
+<div id="crmHubEmbed" class="crm-hub-embed" style="display:none;width:100%;height:100%;overflow:hidden;border-radius:18px;position:relative;flex-direction:column;">
+  <!-- Label bar -->
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:rgba(233,30,140,0.08);border-bottom:1px solid rgba(233,30,140,0.15);flex-shrink:0;">
+    <div style="display:flex;align-items:center;gap:7px;">
+      <span style="width:6px;height:6px;border-radius:50%;background:#e91e8c;box-shadow:0 0 8px #e91e8c;display:inline-block;animation:crmDot 1.5s infinite;"></span>
+      <span style="font-size:10px;font-weight:700;color:#f06ab5;text-transform:uppercase;letter-spacing:.5px;">Sistema ao vivo</span>
+    </div>
+    <span style="font-size:10px;color:#7a8299;" id="crmScreenLabel">Dashboard Operacional</span>
+    <div style="display:flex;gap:4px;" id="crmIndicators"></div>
+  </div>
+  <!-- Scaled mockup -->
+  <div style="flex:1;overflow:hidden;position:relative;transform-origin:top left;" id="crmMockupWrap">
+    <div class="showcase-wrap">
+    <!-- SIDEBAR -->
+    <div class="hub-sidebar">
+      <div class="hub-logo">
+        <div class="hub-logo-icon">🌸</div>
+        <div class="hub-logo-text">
+          <strong>Chantê Hub</strong>
+          <span>Gestão de Influenciadoras</span>
+        </div>
+      </div>
+      <nav class="hub-nav" id="hubNav">
+        <div class="nav-item" data-screen="dashboard"><span class="nav-ico">⊞</span> Dashboard</div>
+        <div class="nav-item" data-screen="calendario"><span class="nav-ico">📅</span> Calendário</div>
+        <div class="nav-item" data-screen="social"><span class="nav-ico">📱</span> Social Media</div>
+        <div class="nav-item" data-screen="influenciadoras"><span class="nav-ico">👤</span> Influenciadoras</div>
+        <div class="nav-item" data-screen="financeiro"><span class="nav-ico">💳</span> Financeiro</div>
+        <div class="nav-item" data-screen="links"><span class="nav-ico">🔗</span> Links</div>
+        <div class="nav-item" data-screen="entregas"><span class="nav-ico">⊞</span> Entregas</div>
+        <div class="nav-item" data-screen="demandas"><span class="nav-ico">⊞</span> Demandas</div>
+        <div class="nav-item" data-screen="roi"><span class="nav-ico">📊</span> ROI</div>
+        <div class="nav-item" data-screen="ia"><span class="nav-ico">🤖</span> IA</div>
+        <div class="nav-item" data-screen="lembretes"><span class="nav-ico">🔔</span> Lembretes</div>
+      </nav>
+      <div class="hub-footer">© 2024 Collab Manager</div>
+    </div>
+
+    <!-- MAIN SCREENS -->
+    <div class="hub-main" id="hubMain">
+
+      <!-- SCREEN 1: DASHBOARD OPERACIONAL -->
+      <div class="hub-screen" id="screen-dashboard">
+        <div class="screen-title">Dashboard Operacional</div>
+        <div class="screen-sub">Monitoramento de vendas e estoque em tempo real</div>
+        <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap">
+          <span style="padding:4px 10px;border-radius:6px;background:linear-gradient(135deg,var(--pink),var(--purple-hub));font-size:10px;font-weight:700">Hoje</span>
+          <span style="padding:4px 10px;border-radius:6px;background:var(--hub-card);border:1px solid var(--hub-border);font-size:10px;color:var(--hub-muted)">Ontem</span>
+          <span style="padding:4px 10px;border-radius:6px;background:var(--hub-card);border:1px solid var(--hub-border);font-size:10px;color:var(--hub-muted)">7 dias</span>
+          <span style="padding:4px 10px;border-radius:6px;background:var(--hub-card);border:1px solid var(--hub-border);font-size:10px;color:var(--hub-muted)">Este mês</span>
+          <span style="margin-left:8px;padding:4px 10px;border-radius:6px;background:linear-gradient(135deg,var(--pink),var(--purple-hub));font-size:10px;font-weight:700">Todos</span>
+          <span style="padding:4px 10px;border-radius:6px;background:var(--hub-card);border:1px solid var(--hub-border);font-size:10px;color:var(--hub-muted)">TikTok</span>
+          <span style="padding:4px 10px;border-radius:6px;background:var(--hub-card);border:1px solid var(--hub-border);font-size:10px;color:var(--hub-muted)">B4You</span>
+        </div>
+        <div class="stat-row cols4">
+          <div class="stat-card"><div class="stat-icon">🛒</div><div class="stat-val white" id="d1">0</div><div class="stat-lbl">Vendas hoje</div></div>
+          <div class="stat-card"><div class="stat-icon" style="color:var(--green-hub)">$</div><div class="stat-val green" id="d2">R$ 0</div><div class="stat-lbl">Faturamento hoje</div></div>
+          <div class="stat-card"><div class="stat-icon" style="color:var(--pink)">↗</div><div class="stat-val pink" id="d3">0</div><div class="stat-lbl">TikTok hoje</div></div>
+          <div class="stat-card"><div class="stat-icon" style="color:var(--purple-hub)">👥</div><div class="stat-val purple" id="d4">0</div><div class="stat-lbl">B4You hoje</div></div>
+        </div>
+        <div class="stat-row cols4">
+          <div class="stat-card"><div class="stat-icon" style="color:var(--purple-hub)">$</div><div class="stat-val purple" id="d5">R$ 0</div><div class="stat-lbl">Fat. mês</div></div>
+          <div class="stat-card"><div class="stat-icon" style="color:var(--cyan-hub)">🚚</div><div class="stat-val cyan" id="d6">0</div><div class="stat-lbl">Pedidos abertos</div></div>
+          <div class="stat-card"><div class="stat-icon" style="color:var(--red-hub)">✕</div><div class="stat-val red" id="d7">0</div><div class="stat-lbl">Cancelados</div></div>
+          <div class="stat-card"><div class="stat-icon" style="color:var(--orange-hub)">⚠</div><div class="stat-val orange" id="d8">0</div><div class="stat-lbl">Estoque baixo</div></div>
+        </div>
+        <div class="chart-row" style="margin-top:4px">
+          <div class="chart-box">
+            <div class="chart-title">Vendas por dia</div>
+            <div class="line-chart">
+              <svg class="chart" viewBox="0 0 400 80" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="gBlue" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#00e0ff" stop-opacity=".4"/>
+                    <stop offset="100%" stop-color="#00e0ff" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+                <path d="M0,78 L20,76 L40,75 L60,74 L80,72 L100,70 L120,68 L140,65 L160,60 L180,55 L200,45 L220,40 L240,35 L260,30 L280,25 L300,20 L320,18 L340,15 L360,12 L380,10 L400,8" fill="none" stroke="#00e0ff" stroke-width="1.5" opacity=".6"/>
+                <path d="M0,78 L20,76 L40,75 L60,74 L80,72 L100,70 L120,68 L140,65 L160,60 L180,55 L200,45 L220,40 L240,35 L260,30 L280,25 L300,20 L320,18 L340,15 L360,12 L380,10 L400,8 L400,80 L0,80Z" fill="url(#gBlue)"/>
+              </svg>
+            </div>
+          </div>
+          <div class="chart-box">
+            <div class="chart-title">Fat. por dia</div>
+            <div class="line-chart">
+              <svg class="chart" viewBox="0 0 200 80" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="gGreen" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#22c55e" stop-opacity=".4"/>
+                    <stop offset="100%" stop-color="#22c55e" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+                <path d="M0,78 L30,72 L60,65 L90,50 L120,35 L150,20 L180,12 L200,8" fill="none" stroke="#22c55e" stroke-width="1.5" opacity=".6"/>
+                <path d="M0,78 L30,72 L60,65 L90,50 L120,35 L150,20 L180,12 L200,8 L200,80 L0,80Z" fill="url(#gGreen)"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCREEN 2: ENTREGAS -->
+      <div class="hub-screen" id="screen-entregas">
+        <div class="screen-title">Entregas</div>
+        <div class="screen-sub">Quarta-Feira, 17 De Junho</div>
+        <div class="stat-row cols4">
+          <div class="stat-card" style="border-top:2px solid var(--red-hub)"><div class="stat-icon" style="color:var(--red-hub)">⚠</div><div class="stat-val red">97</div><div class="stat-lbl">Atrasados</div></div>
+          <div class="stat-card" style="border-top:2px solid var(--orange-hub)"><div class="stat-icon" style="color:var(--orange-hub)">⏰</div><div class="stat-val orange">3</div><div class="stat-lbl">Para Hoje</div></div>
+          <div class="stat-card" style="border-top:2px solid var(--purple-hub)"><div class="stat-icon" style="color:var(--purple-hub)">📅</div><div class="stat-val purple">9</div><div class="stat-lbl">Próx. 7 dias</div></div>
+          <div class="stat-card" style="border-top:2px solid var(--cyan-hub)"><div class="stat-icon" style="color:var(--cyan-hub)">📸</div><div class="stat-val cyan">294</div><div class="stat-lbl">Collabs Ativas</div></div>
+        </div>
+        <div class="alert-banner orange">
+          <span>📦</span>
+          <div><strong>7 influenciadoras aguardando produto</strong><br><span style="font-size:10px;opacity:.8">As entregas delas não estão contando nos números acima até o produto ser enviado.</span></div>
+        </div>
+        <div class="stat-row cols3">
+          <div class="stat-card"><div style="display:flex;align-items:center;gap:6px"><span>👥</span><div><div class="stat-val white" style="font-size:20px">37</div><div class="stat-lbl">Influenciadoras Ativas</div></div></div></div>
+          <div class="stat-card"><div style="display:flex;align-items:center;gap:6px"><span style="color:var(--pink)">📷</span><div><div class="stat-val pink" style="font-size:20px">36</div><div class="stat-lbl">Instagram</div></div></div></div>
+          <div class="stat-card"><div style="display:flex;align-items:center;gap:6px"><span style="color:var(--cyan-hub)">▶</span><div><div class="stat-val cyan" style="font-size:20px">4</div><div class="stat-lbl">TikTok Live</div></div></div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr .45fr;gap:10px;margin-top:8px">
+          <div class="chart-box" style="padding:10px">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+              <span style="font-size:11px;font-weight:700">Todos os compromissos</span>
+              <span style="background:rgba(255,255,255,.1);padding:2px 8px;border-radius:99px;font-size:10px">109</span>
+            </div>
+            <table class="hub-table">
+              <tr><td style="font-size:11px;padding:7px 6px">📷 Marina Souza<br><span style="font-size:9px;color:var(--hub-muted)">Story · 16/06 · Post</span></td><td><span class="status-pill atrasado">Atrasado</span></td></tr>
+              <tr><td style="font-size:11px;padding:7px 6px">📷 Letícia Rocha<br><span style="font-size:9px;color:var(--hub-muted)">Story · 12/06 · Post</span></td><td><span class="status-pill atrasado">Atrasado</span></td></tr>
+              <tr><td style="font-size:11px;padding:7px 6px">📷 Camila Ferreira<br><span style="font-size:9px;color:var(--hub-muted)">Story · 12/06 · Post</span></td><td><span class="status-pill atrasado">Atrasado</span></td></tr>
+            </table>
+          </div>
+          <div class="chart-box" style="padding:10px">
+            <div style="font-size:11px;font-weight:700;margin-bottom:8px;color:var(--green-hub)">$ Este mês</div>
+            <div class="fin-rows" style="gap:6px">
+              <div style="padding:8px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.15);border-radius:8px;display:flex;justify-content:space-between"><span style="font-size:10px">↗ Receita</span><span style="color:var(--green-hub);font-size:11px;font-weight:700">R$ 0,00</span></div>
+              <div style="padding:8px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.15);border-radius:8px;display:flex;justify-content:space-between"><span style="font-size:10px">↘ Despesas</span><span style="color:var(--red-hub);font-size:11px;font-weight:700">R$ 1.400</span></div>
+              <div style="padding:8px;background:rgba(239,68,68,.05);border:1px solid rgba(239,68,68,.10);border-radius:8px;display:flex;justify-content:space-between"><span style="font-size:10px">$ Lucro líquido</span><span style="color:var(--red-hub);font-size:11px;font-weight:700">-R$1.400</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCREEN 3: INFLUENCIADORAS -->
+      <div class="hub-screen" id="screen-influenciadoras">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+          <div><div class="screen-title">Influenciadoras</div><div class="screen-sub">39 cadastradas</div></div>
+          <div style="display:flex;gap:8px">
+            <button style="padding:7px 12px;border-radius:9px;background:rgba(255,255,255,.08);border:1px solid var(--hub-border);color:#fff;font-size:10px;font-weight:700;cursor:pointer">📣 Avisos Globais</button>
+            <button style="padding:7px 12px;border-radius:9px;background:linear-gradient(135deg,var(--pink),var(--purple-hub));border:none;color:#fff;font-size:10px;font-weight:700;cursor:pointer">+ Nova Influenciadora</button>
+          </div>
+        </div>
+        <div class="stat-row cols3" style="margin-bottom:12px">
+          <div class="stat-card"><div style="font-size:10px;color:var(--hub-muted);margin-bottom:4px">👥 Total Ativas</div><div class="stat-val white" style="font-size:22px">37</div></div>
+          <div class="stat-card"><div style="font-size:10px;color:var(--hub-muted);margin-bottom:4px">📷 Instagram</div><div class="stat-val pink" style="font-size:22px">36</div></div>
+          <div class="stat-card"><div style="font-size:10px;color:var(--hub-muted);margin-bottom:4px">▶ TikTok Live</div><div class="stat-val cyan" style="font-size:22px">4</div></div>
+        </div>
+        <div style="margin-bottom:12px;background:rgba(255,255,255,.04);border:1px solid var(--hub-border);border-radius:9px;padding:7px 10px;display:flex;align-items:center;gap:6px">
+          <span style="color:var(--hub-muted)">🔍</span>
+          <span style="color:var(--hub-muted);font-size:11px">Buscar por nome, @ ou email...</span>
+        </div>
+        <div class="inf-grid">
+          <div class="inf-card">
+            <div class="inf-header"><div class="inf-av">B</div><div><div class="inf-name">Marina Souza</div><div class="inf-handle">@marinasouza_</div></div></div>
+            <div style="font-size:10px;color:var(--hub-muted);margin-bottom:6px">📞 11987654321<br>Ter e Sex Reels 20/06 e 27/06</div>
+            <div style="background:rgba(245,158,11,.10);border:1px solid rgba(245,158,11,.2);padding:5px 8px;border-radius:7px;font-size:9px;color:#fbbf24;margin-bottom:6px">📦 Aguardando Produto</div>
+            <div class="inf-tags"><span class="inf-tag ativa">Ativa</span><span class="inf-tag">Instagram</span><span style="margin-left:auto;font-size:9px;color:var(--purple-hub)">9 collabs</span></div>
+          </div>
+          <div class="inf-card">
+            <div class="inf-header"><div class="inf-av" style="background:linear-gradient(135deg,var(--purple-hub),var(--cyan-hub))">J</div><div><div class="inf-name">Rafaela Costa</div><div class="inf-handle">@rafaelacosta.fit</div></div></div>
+            <div style="font-size:10px;color:var(--hub-muted);margin-bottom:6px">✉ rafaela.costa09@gmail.com<br>Seg e Qui Reels 19/06 e 26/06</div>
+            <div style="background:rgba(245,158,11,.10);border:1px solid rgba(245,158,11,.2);padding:5px 8px;border-radius:7px;font-size:9px;color:#fbbf24;margin-bottom:6px">📦 Aguardando Produto</div>
+            <div class="inf-tags"><span class="inf-tag ativa">Ativa</span><span class="inf-tag">Instagram</span><span style="margin-left:auto;font-size:9px;color:var(--purple-hub)">8 collabs</span></div>
+          </div>
+          <div class="inf-card">
+            <div class="inf-header"><div class="inf-av" style="background:linear-gradient(135deg,var(--cyan-hub),#0ea5e9)">J</div><div><div class="inf-name">Bruna Tavares</div><div class="inf-handle">@brunatavares_</div></div></div>
+            <div style="font-size:10px;color:var(--hub-muted);margin-bottom:6px">✉ brunatavares95@icloud.com<br>Ter e Sáb Reels 26/06 e 30/06</div>
+            <div style="background:rgba(245,158,11,.10);border:1px solid rgba(245,158,11,.2);padding:5px 8px;border-radius:7px;font-size:9px;color:#fbbf24;margin-bottom:6px">📦 Aguardando Produto</div>
+            <div class="inf-tags"><span class="inf-tag ativa">Ativa</span><span class="inf-tag">Instagram</span><span style="margin-left:auto;font-size:9px;color:var(--purple-hub)">9 collabs</span></div>
+          </div>
+          <div class="inf-card">
+            <div class="inf-header"><div class="inf-av" style="background:linear-gradient(135deg,var(--orange-hub),#ef4444)">@</div><div><div class="inf-name">@priscilanuness</div><div class="inf-handle">@priscilanuness (TikTok)</div></div></div>
+            <div style="font-size:10px;color:var(--hub-muted);margin-bottom:6px">✉ priscila.nuness@gmail.com<br>📞 91998234567</div>
+            <div style="height:20px;margin-bottom:6px"></div>
+            <div class="inf-tags"><span class="inf-tag ativa">Ativa</span><span class="inf-tag">TikTok</span><span style="margin-left:auto;font-size:9px;color:var(--purple-hub)">5 collabs</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCREEN 4: CALENDÁRIO -->
+      <div class="hub-screen" id="screen-calendario">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button style="padding:5px 10px;border-radius:7px;background:rgba(255,255,255,.07);border:1px solid var(--hub-border);color:var(--hub-muted);font-size:10px;cursor:pointer">▼ Todas influenciadoras</button>
+            <button style="padding:5px 10px;border-radius:7px;background:rgba(255,255,255,.07);border:1px solid var(--hub-border);color:var(--hub-muted);font-size:10px;cursor:pointer">▼ Todos os status</button>
+            <button style="padding:5px 10px;border-radius:7px;background:rgba(255,255,255,.07);border:1px solid var(--hub-border);color:var(--hub-muted);font-size:10px;cursor:pointer">▼ Todos os tipos</button>
+          </div>
+          <div class="cal-views">
+            <button class="cal-view-btn active">⊞ Mês</button>
+            <button class="cal-view-btn">📅 Semana</button>
+            <button class="cal-view-btn">≡ Agenda</button>
+          </div>
+        </div>
+        <div class="cal-header">
+          <div class="cal-nav">
+            <span style="cursor:pointer;color:var(--hub-muted)">‹</span>
+            <span>junho de 2026</span>
+            <span style="cursor:pointer;color:var(--hub-muted)">›</span>
+            <button style="padding:4px 10px;border-radius:7px;background:#fff;color:#000;font-size:10px;font-weight:700;border:none;cursor:pointer">Hoje</button>
+          </div>
+        </div>
+        <div class="cal-grid">
+          <div class="cal-day-head">DOM</div><div class="cal-day-head">SEG</div><div class="cal-day-head">TER</div>
+          <div class="cal-day-head">QUA</div><div class="cal-day-head">QUI</div><div class="cal-day-head">SEX</div><div class="cal-day-head">SÁB</div>
+          <!-- Row 1 -->
+          <div class="cal-day"><div class="cal-num">31</div></div>
+          <div class="cal-day"><div class="cal-num">1</div><div class="cal-event pink">Giovana Melo</div><div class="cal-event purple">@stephaniedays_</div></div>
+          <div class="cal-day"><div class="cal-num">2</div><div class="cal-event pink">Andressa Pinto</div><div class="cal-event purple">@yasminbarbosa</div></div>
+          <div class="cal-day"><div class="cal-num">3</div><div class="cal-event cyan">@giovanamelo_</div><div class="cal-event green">Isabela Lima</div></div>
+          <div class="cal-day"><div class="cal-num">4</div><div class="cal-event pink">Andressa Pinto</div><div class="cal-event cyan">@giovanamelo_</div></div>
+          <div class="cal-day"><div class="cal-num">5</div><div class="cal-event purple">Stephanie D.</div><div class="cal-event pink">@yasminbarbosa</div></div>
+          <div class="cal-day"><div class="cal-num">6</div><div class="cal-event cyan">@stephaniedays_</div></div>
+          <!-- Row 2 -->
+          <div class="cal-day"><div class="cal-num">7</div><div class="cal-event purple">Stephanie D.</div><div class="cal-event green">@giovanamelo_</div></div>
+          <div class="cal-day"><div class="cal-num">8</div></div>
+          <div class="cal-day"><div class="cal-num">9</div></div>
+          <div class="cal-day"><div class="cal-num">10</div><div class="cal-event green">Fernada Alves</div><div class="cal-event pink">Camila Ferreira</div></div>
+          <div class="cal-day"><div class="cal-num">11</div><div class="cal-event cyan">Andressa Pinto</div></div>
+          <div class="cal-day"><div class="cal-num">12</div><div class="cal-event green">Fernada Alves</div><div class="cal-event pink">Camila Ferreira</div></div>
+          <div class="cal-day"><div class="cal-num">13</div></div>
+          <!-- Row 3 -->
+          <div class="cal-day"><div class="cal-num">14</div></div>
+          <div class="cal-day"><div class="cal-num">15</div><div class="cal-event pink">Camila Ferreira</div><div class="cal-event purple">Giovana Melo</div></div>
+          <div class="cal-day"><div class="cal-num">16</div><div class="cal-event green">Marina Souza</div><div class="cal-event cyan">Andressa Pinto</div></div>
+          <div class="cal-day today"><div class="cal-num">17</div><div class="cal-event pink">Fernada Alves</div><div class="cal-event purple">Camila Ferreira</div></div>
+          <div class="cal-day"><div class="cal-num">18</div><div class="cal-event cyan">Andressa Pinto</div></div>
+          <div class="cal-day"><div class="cal-num">19</div><div class="cal-event green">Marina Souza</div><div class="cal-event pink">Fernada Alves</div></div>
+          <div class="cal-day"><div class="cal-num">20</div><div class="cal-event purple">Fernada Alves</div></div>
+        </div>
+      </div>
+
+      <!-- SCREEN 5: FINANCEIRO -->
+      <div class="hub-screen" id="screen-financeiro">
+        <div style="display:flex;gap:8px;margin-bottom:14px">
+          <button style="padding:5px 12px;border-radius:7px;background:linear-gradient(135deg,var(--pink),var(--purple-hub));border:none;color:#fff;font-size:10px;font-weight:700">Dashboard</button>
+          <button style="padding:5px 12px;border-radius:7px;background:var(--hub-card);border:1px solid var(--hub-border);color:var(--hub-muted);font-size:10px">Receitas</button>
+          <button style="padding:5px 12px;border-radius:7px;background:var(--hub-card);border:1px solid var(--hub-border);color:var(--hub-muted);font-size:10px">Despesas</button>
+          <button style="padding:5px 12px;border-radius:7px;background:var(--hub-card);border:1px solid var(--hub-border);color:var(--hub-muted);font-size:10px">Histórico</button>
+          <button style="padding:5px 12px;border-radius:7px;background:var(--hub-card);border:1px solid var(--hub-border);color:var(--hub-muted);font-size:10px">ROI Influenciadoras</button>
+        </div>
+        <div class="stat-row" style="grid-template-columns:repeat(5,1fr);gap:8px">
+          <div class="stat-card" style="background:rgba(34,197,94,.07);border-color:rgba(34,197,94,.2)"><div style="font-size:18px;color:var(--green-hub)">↑</div><div class="stat-val green" style="font-size:18px">R$ 0</div><div class="stat-lbl">Receita</div></div>
+          <div class="stat-card" style="background:rgba(239,68,68,.07);border-color:rgba(239,68,68,.2)"><div style="font-size:18px;color:var(--red-hub)">↓</div><div class="stat-val red" style="font-size:18px">R$ 1.4k</div><div class="stat-lbl">Despesas</div></div>
+          <div class="stat-card" style="background:rgba(139,92,246,.07);border-color:rgba(139,92,246,.2)"><div style="font-size:18px;color:var(--purple-hub)">👥</div><div class="stat-val purple" style="font-size:18px">R$ 1.4k</div><div class="stat-lbl">Influenciadoras</div></div>
+          <div class="stat-card" style="background:rgba(245,158,11,.07);border-color:rgba(245,158,11,.2)"><div style="font-size:18px;color:var(--orange-hub)">📦</div><div class="stat-val orange" style="font-size:18px">R$ 0</div><div class="stat-lbl">Produtos</div></div>
+          <div class="stat-card" style="background:rgba(0,224,255,.07);border-color:rgba(0,224,255,.2)"><div style="font-size:18px;color:var(--cyan-hub)">💳</div><div class="stat-val cyan" style="font-size:18px">R$ 0</div><div class="stat-lbl">Outros</div></div>
+        </div>
+        <div class="chart-row" style="margin-top:10px">
+          <div class="chart-box">
+            <div class="chart-title">Evolução — 6 meses</div>
+            <div class="line-chart" style="height:100px">
+              <svg class="chart" viewBox="0 0 400 100" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="gRed" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#ef4444" stop-opacity=".35"/>
+                    <stop offset="100%" stop-color="#ef4444" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+                <!-- Receita (quase zero) -->
+                <path d="M0,98 L67,97 L134,96 L200,95 L267,94 L334,93 L400,92" fill="none" stroke="#22c55e" stroke-width="1.5"/>
+                <!-- Despesa (sobe e desce) -->
+                <path d="M0,98 L67,90 L134,60 L200,20 L267,35 L334,55 L400,65" fill="none" stroke="#ef4444" stroke-width="1.5"/>
+                <path d="M0,98 L67,90 L134,60 L200,20 L267,35 L334,55 L400,65 L400,100 L0,100Z" fill="url(#gRed)"/>
+                <text x="5" y="96" font-size="7" fill="#22c55e">jan</text>
+                <text x="72" y="96" font-size="7" fill="#22c55e">fev</text>
+                <text x="140" y="96" font-size="7" fill="#22c55e">mar</text>
+                <text x="205" y="96" font-size="7" fill="#22c55e">abr</text>
+                <text x="270" y="96" font-size="7" fill="#22c55e">mai</text>
+                <text x="336" y="96" font-size="7" fill="#22c55e">jun</text>
+              </svg>
+            </div>
+            <div style="display:flex;gap:12px;margin-top:4px">
+              <div style="display:flex;align-items:center;gap:4px;font-size:9px;color:#22c55e"><span style="width:8px;height:3px;background:#22c55e;border-radius:99px;display:inline-block"></span>Receita</div>
+              <div style="display:flex;align-items:center;gap:4px;font-size:9px;color:#ef4444"><span style="width:8px;height:3px;background:#ef4444;border-radius:99px;display:inline-block"></span>Despesa</div>
+            </div>
+          </div>
+          <div class="chart-box">
+            <div class="chart-title">Despesas por Categoria</div>
+            <div class="donut-wrap">
+              <svg viewBox="0 0 80 80" width="70" height="70">
+                <circle cx="40" cy="40" r="30" fill="none" stroke="#8b5cf6" stroke-width="14" stroke-dasharray="118 70"/>
+                <circle cx="40" cy="40" r="30" fill="none" stroke="#e91e8c" stroke-width="14" stroke-dasharray="70 118" stroke-dashoffset="-118"/>
+              </svg>
+              <div class="donut-legend">
+                <div class="donut-leg-item"><div class="donut-dot" style="background:var(--purple-hub)"></div><span>Influenciadoras</span><span style="margin-left:auto;font-weight:700">R$ 1.1k</span></div>
+                <div class="donut-leg-item"><div class="donut-dot" style="background:var(--pink)"></div><span>Outros</span><span style="margin-left:auto;font-weight:700">R$ 300</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCREEN 6: ROI -->
+      <div class="hub-screen" id="screen-roi">
+        <div class="screen-title">ROI — Influenciadoras</div>
+        <div class="screen-sub">Retorno sobre investimento por parceria</div>
+        <div class="roi-grid">
+          <div class="roi-card">
+            <div class="roi-label">ROI Total</div>
+            <div class="roi-val pink" id="roiVal1">0%</div>
+            <div class="roi-change" style="color:var(--green-hub)">↑ +12% vs mês anterior</div>
+            <div class="roi-bar-wrap"><div class="roi-bar pink" id="roiBar1" style="width:0%"></div></div>
+          </div>
+          <div class="roi-card">
+            <div class="roi-label">Faturamento Gerado</div>
+            <div class="roi-val green" id="roiVal2">R$ 0</div>
+            <div class="roi-change" style="color:var(--green-hub)">↑ por influenciadoras</div>
+            <div class="roi-bar-wrap"><div class="roi-bar green" id="roiBar2" style="width:0%"></div></div>
+          </div>
+          <div class="roi-card">
+            <div class="roi-label">Custo por Collab</div>
+            <div class="roi-val purple" id="roiVal3">R$ 0</div>
+            <div class="roi-change" style="color:var(--hub-muted)">média por parceria</div>
+            <div class="roi-bar-wrap"><div class="roi-bar purple" id="roiBar3" style="width:0%"></div></div>
+          </div>
+          <div class="roi-card">
+            <div class="roi-label">Collabs Ativas</div>
+            <div class="roi-val orange" id="roiVal4">0</div>
+            <div class="roi-change" style="color:var(--hub-muted)">294 no total</div>
+            <div class="roi-bar-wrap"><div class="roi-bar orange" id="roiBar4" style="width:0%"></div></div>
+          </div>
+        </div>
+        <div style="margin-top:4px">
+          <div class="chart-box">
+            <div class="chart-title">Top Influenciadoras por ROI</div>
+            <table class="hub-table">
+              <thead><tr><th>#</th><th>Influenciadora</th><th>Custo</th><th>Gerado</th><th>ROI</th></tr></thead>
+              <tbody>
+                <tr><td style="color:var(--pink);font-weight:900">1</td><td>Nathalia Viera</td><td style="color:var(--hub-muted)">R$ 800</td><td style="color:var(--green-hub)">R$ 4.200</td><td><span class="status-pill ok">+425%</span></td></tr>
+                <tr><td style="color:var(--purple-hub);font-weight:900">2</td><td>Marina Souza</td><td style="color:var(--hub-muted)">R$ 600</td><td style="color:var(--green-hub)">R$ 2.800</td><td><span class="status-pill ok">+367%</span></td></tr>
+                <tr><td style="color:var(--cyan-hub);font-weight:900">3</td><td>Rafaela Costa</td><td style="color:var(--hub-muted)">R$ 400</td><td style="color:var(--green-hub)">R$ 1.600</td><td><span class="status-pill ok">+300%</span></td></tr>
+                <tr><td style="font-weight:900">4</td><td>@priscilanuness</td><td style="color:var(--hub-muted)">R$ 300</td><td style="color:var(--orange-hub)">R$ 800</td><td><span class="status-pill pendente">+167%</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCREEN 7: IA INTERATIVA -->
+      <div class="hub-screen" id="screen-ia">
+        <div class="screen-title">IA Interativa</div>
+        <div class="screen-sub">Assistente inteligente para pagamentos, entregas e gestão</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div>
+            <div class="ia-window" id="iaWindow">
+              <div class="ia-header">
+                <div class="ia-av">🤖</div>
+                <div style="flex:1"><div class="ia-name">Chantê AI</div><div class="ia-online">Online agora</div></div>
+                <div style="font-size:10px;color:var(--hub-muted)">Powered by AI</div>
+              </div>
+              <div class="ia-messages" id="iaMessages">
+                <div class="ia-msg bot">👋 Olá! Sou a IA do Chantê Hub. Posso ajudar com pagamentos, entregas e gestão das influenciadoras.</div>
+              </div>
+              <div class="ia-input">
+                <div class="ia-input-box" id="iaInputBox">Perguntar sobre entregas atrasadas...</div>
+                <div class="ia-send">✈</div>
+              </div>
+            </div>
+            <div class="alert-banner pink" style="margin-top:8px">
+              <span>🔔</span>
+              <div><strong>IA detectou 7 entregas críticas</strong><br><span style="font-size:10px">Clique para ver recomendações automáticas</span></div>
+            </div>
+          </div>
+          <div>
+            <div class="chart-box" style="padding:10px;margin-bottom:10px">
+              <div class="chart-title">Sugestões da IA</div>
+              <div style="display:flex;flex-direction:column;gap:6px">
+                <div style="padding:8px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.15);border-radius:8px;font-size:10px">
+                  <div style="font-weight:700;color:#f87171;margin-bottom:2px">⚠ Urgente</div>
+                  Marina Souza — Story atrasado há 1 dia. Enviar lembrete?
+                </div>
+                <div style="padding:8px;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.15);border-radius:8px;font-size:10px">
+                  <div style="font-weight:700;color:#fbbf24;margin-bottom:2px">📦 Logística</div>
+                  7 influenciadoras aguardando produto. Confirmar envio?
+                </div>
+                <div style="padding:8px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.15);border-radius:8px;font-size:10px">
+                  <div style="font-weight:700;color:#4ade80;margin-bottom:2px">💡 Insight</div>
+                  Nathalia Viera tem ROI de 425%. Aumentar parceria?
+                </div>
+              </div>
+            </div>
+            <div class="chart-box" style="padding:10px">
+              <div class="chart-title">Automações ativas</div>
+              <div style="display:flex;flex-direction:column;gap:5px">
+                <div style="display:flex;align-items:center;justify-content:space-between;font-size:10px"><span>🔔 Lembrete de entrega</span><span style="color:var(--green-hub);font-weight:700">✓ Ativo</span></div>
+                <div style="display:flex;align-items:center;justify-content:space-between;font-size:10px"><span>💰 Alerta de pagamento</span><span style="color:var(--green-hub);font-weight:700">✓ Ativo</span></div>
+                <div style="display:flex;align-items:center;justify-content:space-between;font-size:10px"><span>📦 Status de produto</span><span style="color:var(--green-hub);font-weight:700">✓ Ativo</span></div>
+                <div style="display:flex;align-items:center;justify-content:space-between;font-size:10px"><span>📊 Relatório semanal</span><span style="color:var(--orange-hub);font-weight:700">⏸ Pausado</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCREEN 8: LEMBRETES -->
+      <div class="hub-screen" id="screen-lembretes">
+        <div class="screen-title">Lembretes Automáticos</div>
+        <div class="screen-sub">Avisos inteligentes para parcerias, pagamentos e entregas</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div>
+            <div style="font-size:11px;font-weight:700;color:var(--pink);margin-bottom:8px">🔴 Urgentes hoje</div>
+            <div class="reminder-list">
+              <div class="reminder"><div class="reminder-ico pink-bg">📸</div><div class="reminder-body"><div class="reminder-title">Story — Marina Souza</div><div class="reminder-meta">Atrasado 1 dia · Instagram · 16/06</div></div><span class="reminder-badge urgente">Urgente</span></div>
+              <div class="reminder"><div class="reminder-ico orange-bg">💰</div><div class="reminder-body"><div class="reminder-title">Pagamento — Letícia Rocha</div><div class="reminder-meta">Vence hoje · R$ 800,00</div></div><span class="reminder-badge hoje">Hoje</span></div>
+              <div class="reminder"><div class="reminder-ico purple-bg">📦</div><div class="reminder-body"><div class="reminder-title">Produto — Camila Ferreira</div><div class="reminder-meta">Envio pendente · aguardando há 3 dias</div></div><span class="reminder-badge urgente">Urgente</span></div>
+            </div>
+            <div style="font-size:11px;font-weight:700;color:var(--orange-hub);margin:12px 0 8px">🟡 Amanhã</div>
+            <div class="reminder-list">
+              <div class="reminder"><div class="reminder-ico cyan-bg">📹</div><div class="reminder-body"><div class="reminder-title">Reel — Rafaela Costa</div><div class="reminder-meta">18/06 · Instagram · Reels</div></div><span class="reminder-badge amanha">Amanhã</span></div>
+              <div class="reminder"><div class="reminder-ico orange-bg">💳</div><div class="reminder-body"><div class="reminder-title">Pagamento — 3 influenciadoras</div><div class="reminder-meta">Vence 18/06 · R$ 2.400 total</div></div><span class="reminder-badge amanha">Amanhã</span></div>
+            </div>
+          </div>
+          <div>
+            <div class="chart-box" style="padding:10px;margin-bottom:10px">
+              <div class="chart-title">Status dos avisos</div>
+              <div style="display:flex;flex-direction:column;gap:6px">
+                <div><div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px"><span>Enviados hoje</span><span style="color:var(--green-hub);font-weight:700">14</span></div><div class="prog-bar"><div class="prog-fill" style="background:var(--green-hub);width:70%"></div></div></div>
+                <div><div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px"><span>Abertos</span><span style="color:var(--orange-hub);font-weight:700">8</span></div><div class="prog-bar"><div class="prog-fill" style="background:var(--orange-hub);width:40%"></div></div></div>
+                <div><div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px"><span>Respondidos</span><span style="color:var(--cyan-hub);font-weight:700">6</span></div><div class="prog-bar"><div class="prog-fill" style="background:var(--cyan-hub);width:30%"></div></div></div>
+                <div><div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px"><span>Ignorados</span><span style="color:var(--red-hub);font-weight:700">2</span></div><div class="prog-bar"><div class="prog-fill" style="background:var(--red-hub);width:10%"></div></div></div>
+              </div>
+            </div>
+            <div class="chart-box" style="padding:10px">
+              <div class="chart-title">Canais de aviso</div>
+              <div style="display:flex;flex-direction:column;gap:5px;margin-top:4px">
+                <div style="display:flex;align-items:center;gap:8px;font-size:10px"><span>💬</span><span>WhatsApp direto</span><span style="margin-left:auto;color:var(--green-hub);font-weight:700">Ativo</span></div>
+                <div style="display:flex;align-items:center;gap:8px;font-size:10px"><span>✉</span><span>E-mail automático</span><span style="margin-left:auto;color:var(--green-hub);font-weight:700">Ativo</span></div>
+                <div style="display:flex;align-items:center;gap:8px;font-size:10px"><span>🔔</span><span>Push interno</span><span style="margin-left:auto;color:var(--green-hub);font-weight:700">Ativo</span></div>
+                <div style="display:flex;align-items:center;gap:8px;font-size:10px"><span>📱</span><span>SMS</span><span style="margin-left:auto;color:var(--hub-muted)">Em breve</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end hub-main -->
+  </div>
+
+  <!-- INDICATORS -->
+  <div class="screen-indicators" id="indicators"></div>
+  <div class="screen-label" id="screenLabel">Dashboard Operacional</div>
+  </div>
+</div>
         </div>
 
         <div class="viewer-content">
@@ -823,104 +1865,136 @@
 
   <section id="jornada">
     <div class="section-title reveal">
-      <small>Jornada</small>
-      <h2>Da operação técnica à construção de soluções</h2>
-      <p>Minha trajetória une experiência prática em tecnologia, suporte, infraestrutura, análise de sistemas e negócios digitais.</p>
+      <small>Experiência</small>
+      <h2>Trajetória sólida em T.I, vendas e marketing digital</h2>
+      <p>Anos de atuação prática em infraestrutura, desenvolvimento de sistemas e operações digitais — com resultados reais em empresas e projetos próprios.</p>
     </div>
     <div class="timeline">
+
       <div class="timeline-item reveal">
-        <div class="timeline-year">TI Hospitalar</div>
-        <div class="timeline-content"><h3>Suporte, infraestrutura e sistemas</h3><p>Atuação com redes, servidores, usuários, equipamentos, indicadores, backups, documentação técnica e melhoria de processos internos.</p></div>
+        <div class="timeline-year">
+          <span class="tl-tag">Atual</span>
+          Dev & Soluções
+        </div>
+        <div class="timeline-content">
+          <h3>Desenvolvedor · Sistemas, Sites & Automações</h3>
+          <p>Atuo na criação de sistemas sob medida, sites de alta conversão e automações que eliminam fluxos manuais — transformando processos confusos em operações claras, rápidas e escaláveis. Cada projeto nasce de um problema real e termina com uma solução que o cliente consegue usar de verdade.</p>
+          <div class="tl-pills">
+            <span>Criação de Sites</span><span>Sistemas sob medida</span><span>Automação de processos</span><span>Marketing Digital</span><span>Vendas</span>
+          </div>
+        </div>
       </div>
+
       <div class="timeline-item reveal">
-        <div class="timeline-year">Sistemas</div>
-        <div class="timeline-content"><h3>Análise e desenvolvimento de soluções</h3><p>Criação de projetos para resolver problemas reais, conectando tecnologia com necessidade operacional e visão de negócio.</p></div>
+        <div class="timeline-year">
+          <span class="tl-tag">Anterior</span>
+          TI Hospitalar
+        </div>
+        <div class="timeline-content">
+          <h3>Analista de T.I · HPEG</h3>
+          <p>Infraestrutura de redes, servidores, suporte técnico e projetos de sistemas para ambiente hospitalar — incluindo implantação de PACS/DICOM para laudo e visualização de exames de imagem.</p>
+          <div class="tl-pills">
+            <span>Servidores</span><span>Redes</span><span>PACS/DICOM</span><span>Infraestrutura</span><span>Processos</span>
+          </div>
+        </div>
       </div>
+
       <div class="timeline-item reveal">
-        <div class="timeline-year">Digital</div>
-        <div class="timeline-content"><h3>Marketing, automação e escala</h3><p>Aplicação de sistemas, automação e processos em operações digitais, com foco em performance, vendas e organização.</p></div>
+        <div class="timeline-year">
+          <span class="tl-tag">Projetos</span>
+          Sistemas
+        </div>
+        <div class="timeline-content">
+          <h3>Analista & Desenvolvedor · Projetos próprios</h3>
+          <p>Construção de soluções digitais completas — DirectSpeed (prospecção no Instagram), W-API (automação WhatsApp) e Chantê Hub (CRM para marcas com influenciadoras). Da arquitetura ao produto final.</p>
+          <div class="tl-pills">
+            <span>CRM</span><span>Automação</span><span>Dashboards</span><span>APIs</span><span>Produto Digital</span>
+          </div>
+        </div>
       </div>
+
     </div>
   </section>
 
   <section id="skills">
     <div class="section-title reveal">
-      <small>Skills & Cases</small>
-      <h2>Competências aplicadas em projetos reais</h2>
-      <p>Mais do que habilidades isoladas, meu foco está em aplicar tecnologia, automação e estratégia para resolver problemas, organizar processos e gerar resultado.</p>
+      <small>Competências</small>
+      <h2>O que eu entrego na prática</h2>
     </div>
-    <div class="skills-slider reveal">
-      <div class="skills-track">
-        <span>Análise de Sistemas</span><span>Automação</span><span>Infraestrutura</span><span>Servidores</span><span>Integrações</span><span>Marketing Digital</span><span>Funis</span><span>CRM</span><span>Dashboards</span><span>Processos</span><span>WhatsApp</span><span>Gestão Financeira</span>
-        <span>Análise de Sistemas</span><span>Automação</span><span>Infraestrutura</span><span>Servidores</span><span>Integrações</span><span>Marketing Digital</span><span>Funis</span><span>CRM</span><span>Dashboards</span><span>Processos</span><span>WhatsApp</span><span>Gestão Financeira</span>
+    <div class="skills-grid reveal">
+      <div class="skill-area">
+        <div class="skill-area-icon">⚙️</div>
+        <div class="skill-area-title">Sistemas & Automação</div>
+        <div class="skill-area-desc">Análise de processos, desenvolvimento de sistemas sob medida, integrações via API, automações de WhatsApp, Instagram e e-mail, dashboards operacionais e CRM.</div>
       </div>
-    </div>
-    <div class="cases-grid reveal">
-      <div class="case-card">
-        <div class="case-number">CASE 01</div>
-        <h3>DirectSpeed</h3>
-        <p>Sistema para acelerar prospecção comercial no Instagram, organizando mensagens, templates, cadência de abordagem e operação de contatos.</p>
-        <div class="case-result"><strong>Resultado:</strong> Mais velocidade na abordagem e maior controle sobre a operação comercial.</div>
+      <div class="skill-area">
+        <div class="skill-area-icon">🌐</div>
+        <div class="skill-area-title">Sites & Marketing Digital</div>
+        <div class="skill-area-desc">Criação de sites profissionais e landing pages de alta conversão, funis de vendas, estratégias de tráfego e presença digital para negócios e marcas.</div>
       </div>
-      <div class="case-card">
-        <div class="case-number">CASE 02</div>
-        <h3>W-API</h3>
-        <p>Automação de mensagens via WhatsApp para lembretes, comunicação recorrente e acompanhamento de entregas com influenciadoras.</p>
-        <div class="case-result"><strong>Resultado:</strong> Redução de falhas manuais e comunicação mais previsível.</div>
+      <div class="skill-area">
+        <div class="skill-area-icon">🏗️</div>
+        <div class="skill-area-title">Infraestrutura de T.I</div>
+        <div class="skill-area-desc">Servidores, redes, PACS hospitalar, backups, suporte técnico e documentação — experiência real em ambiente crítico de saúde.</div>
       </div>
-      <div class="case-card">
-        <div class="case-number">CASE 03</div>
-        <h3>CRM para Marcas</h3>
-        <p>Dashboard operacional para centralizar vendas, financeiro, entregas, demandas, links, integrações e gestão de influenciadoras.</p>
-        <div class="case-result"><strong>Resultado:</strong> Visão clara da operação e tomada de decisão mais rápida.</div>
+      <div class="skill-area">
+        <div class="skill-area-icon">📊</div>
+        <div class="skill-area-title">Gestão & Operações</div>
+        <div class="skill-area-desc">Indicadores, financeiro, controle de entregas, gestão de equipes e operações digitais — traduzindo dados em decisões mais rápidas e seguras.</div>
       </div>
     </div>
-    <div class="clients-area reveal">
-      <p>Projetos, frentes e operações onde apliquei minhas soluções:</p>
-      <div class="clients-grid">
-        <div class="client-logo">HPEG</div>
-        <div class="client-logo">Chantê Beauty</div>
-        <div class="client-logo">DirectSpeed</div>
-        <div class="client-logo">W-API</div>
-        <div class="client-logo">CRM para Marcas</div>
-      </div>
-    </div>
+
   </section>
 
   <section id="contato">
     <div class="contact-card reveal">
-      <h2>Precisa organizar, automatizar ou escalar uma operação?</h2>
-      <p>Posso ajudar a transformar processos soltos em sistemas, painéis e automações mais claros, rápidos e operacionais.</p>
-      <a class="btn btn-primary" href="https://wa.me/5591982765501" target="_blank">Falar com Lucas</a>
+      <div class="contact-badge">Disponível para projetos</div>
+      <h2>Vamos construir algo que funciona de verdade?</h2>
+      <p>Site, sistema, automação ou estratégia digital — se você quer sair do improviso e ter uma operação estruturada, posso ajudar.</p>
+      <div class="contact-actions">
+        <a class="btn btn-primary" href="https://wa.me/5591982765501" target="_blank">💬 Falar no WhatsApp</a>
+        <a class="btn btn-secondary" href="mailto:lucassilva@email.com">✉ Enviar e-mail</a>
+      </div>
+      <div class="contact-trust">
+        <span>✓ Entrega rápida</span>
+        <span>✓ Resultado mensurável</span>
+        <span>✓ Suporte contínuo</span>
+      </div>
     </div>
   </section>
 
-  <footer>© 2026 Lucas Silva. Portfólio pessoal.</footer>
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-logo">Lucas<span>.</span></span>
+      <span>© 2026 Lucas Silva — Sistemas, Sites & Automações</span>
+      <a href="https://wa.me/5591982765501" target="_blank" style="color:var(--primary)">WhatsApp</a>
+    </div>
+  </footer>
 
   <script>
-    /* === REVEAL ON SCROLL === */
-    const revealElements = document.querySelectorAll('.reveal');
-    function revealOnScroll() {
-      const windowHeight = window.innerHeight;
-      revealElements.forEach((el) => {
-        if (el.getBoundingClientRect().top < windowHeight - 100) {
-          el.classList.add('active');
-        }
+    /* ============================================================
+       REVEAL ON SCROLL
+       ============================================================ */
+    document.querySelectorAll('.reveal').forEach(el => {
+      if (el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add('active');
+    });
+    window.addEventListener('scroll', () => {
+      document.querySelectorAll('.reveal').forEach(el => {
+        if (el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add('active');
       });
-    }
-    window.addEventListener('scroll', revealOnScroll);
-    revealOnScroll();
+    });
 
-    /* === DADOS DOS PROJETOS === */
+    /* ============================================================
+       PROJECTS DATA
+       ============================================================ */
     const projectsData = {
       directspeed: {
         title: "DirectSpeed",
         category: "Automação Comercial",
-        status: "Apresentação interativa",
+        status: "Extensão Chrome ativa",
         type: "demo",
         description: "Sistema de prospecção para Instagram criado para acelerar abordagens, organizar templates, controlar limites diários e dar previsibilidade para operações comerciais que dependem de volume, cadência e acompanhamento.",
-        tags: ["Instagram", "Direct", "Automação", "Prospecção"],
-        image: null
+        tags: ["Instagram", "Direct", "Automação", "Prospecção"]
       },
       wapi: {
         title: "W-API",
@@ -934,122 +2008,120 @@
       crm: {
         title: "CRM para Marcas",
         category: "Dashboard Operacional",
-        status: "Gestão em tempo real",
-        type: "image",
-        description: "Dashboard para centralizar vendas, entregas, financeiro, demandas, links, integrações e gestão de influenciadoras. A proposta é transformar dados soltos em visão clara para decisão.",
-        tags: ["CRM", "Dashboard", "Influenciadoras", "Gestão"],
-        image: "crm-preview.png"
+        status: "Sistema completo ativo",
+        type: "hub",
+        description: "Dashboard completo para marcas gerenciarem influenciadoras, entregas, financeiro, ROI e operação — com IA integrada e alertas automáticos. Veja o sistema funcionando ao vivo.",
+        tags: ["CRM", "Dashboard", "Influenciadoras", "IA", "ROI", "Entregas"]
       }
     };
 
-    /* === SHOWCASE INTERATIVO === */
-    const projectTabs = document.querySelectorAll(".project-tab");
-    const projectImage = document.getElementById("projectImage");
+    /* ============================================================
+       SHOWCASE INTERATIVO
+       ============================================================ */
+    const projectTabs     = document.querySelectorAll(".project-tab");
+    const projectImage    = document.getElementById("projectImage");
     const projectCategory = document.getElementById("projectCategory");
-    const projectStatus = document.getElementById("projectStatus");
-    const projectTitle = document.getElementById("projectTitle");
+    const projectStatus   = document.getElementById("projectStatus");
+    const projectTitle    = document.getElementById("projectTitle");
     const projectDescription = document.getElementById("projectDescription");
-    const projectTags = document.getElementById("projectTags");
-    const viewerContent = document.querySelector(".viewer-content");
-    const viewerImageBox = document.querySelector(".viewer-image-box");
+    const projectTags     = document.getElementById("projectTags");
+    const viewerContent   = document.querySelector(".viewer-content");
+    const viewerImageBox  = document.querySelector(".viewer-image-box");
     const directspeedDemo = document.getElementById("directspeedDemo");
+    const crmHubEmbed     = document.getElementById("crmHubEmbed");
 
-    let currentProject = "directspeed";
+    let currentProject    = "directspeed";
     let autoRotate;
     let transitionTimeout;
 
+    const projectShowcase = document.querySelector('.project-showcase');
+
     function applyProjectContent(project) {
+      /* hide all visual panels */
+      directspeedDemo.style.display = "none";
+      projectImage.style.display    = "none";
+      if (crmHubEmbed) crmHubEmbed.style.display = "none";
+
+      /* toggle CRM full-width layout */
+      if (projectShowcase) projectShowcase.classList.toggle('crm-mode', project.type === 'hub');
+
       if (project.type === "demo") {
         directspeedDemo.style.display = "grid";
-        projectImage.style.display = "none";
+
+      } else if (project.type === "hub") {
+        if (crmHubEmbed) {
+          crmHubEmbed.style.display = "flex";
+          /* in crm-mode no scaling needed — hub fills naturally */
+          if (typeof hubStart === 'function') hubStart();
+        }
+
       } else {
-        directspeedDemo.style.display = "none";
         projectImage.style.display = "block";
-        projectImage.src = project.image;
-        projectImage.alt = "Preview do projeto " + project.title;
+        projectImage.src = project.image || '';
+        projectImage.alt = "Preview: " + project.title;
       }
 
-      projectCategory.textContent = project.category;
-      projectStatus.textContent = project.status;
-      projectTitle.textContent = project.title;
+      projectCategory.textContent  = project.category;
+      projectStatus.textContent    = project.status;
+      projectTitle.textContent     = project.title;
       projectDescription.textContent = project.description;
 
       projectTags.innerHTML = "";
-      project.tags.forEach(tag => {
-        const span = document.createElement("span");
-        span.className = "viewer-tag";
-        span.textContent = tag;
-        projectTags.appendChild(span);
+      (project.tags || []).forEach(tag => {
+        const s = document.createElement("span");
+        s.className = "viewer-tag";
+        s.textContent = tag;
+        projectTags.appendChild(s);
       });
     }
 
-    function loadProject(projectKey) {
-      const project = projectsData[projectKey];
+    function loadProject(key) {
+      const project = projectsData[key];
       if (!project) return;
+      currentProject = key;
 
-      currentProject = projectKey;
-
-      projectTabs.forEach(tab => {
-        tab.classList.toggle("active", tab.dataset.project === projectKey);
-      });
+      projectTabs.forEach(tab => tab.classList.toggle("active", tab.dataset.project === key));
 
       clearTimeout(transitionTimeout);
-
-      viewerContent.classList.add("is-switching");
-      viewerImageBox.classList.add("is-switching");
-
-      transitionTimeout = setTimeout(() => {
-        applyProjectContent(project);
-
-        requestAnimationFrame(() => {
-          viewerContent.classList.remove("is-switching");
-          viewerImageBox.classList.remove("is-switching");
-        });
-      }, 160);
+      applyProjectContent(project);
     }
 
     projectTabs.forEach(tab => {
       tab.addEventListener("click", () => {
         loadProject(tab.dataset.project);
-        restartAutoRotate();
+        clearInterval(autoRotate);
+        startPortfolioRotate();
       });
     });
 
-    function startAutoRotate() {
+    function startPortfolioRotate() {
       const order = ["directspeed", "wapi", "crm"];
       autoRotate = setInterval(() => {
-        const nextIndex = (order.indexOf(currentProject) + 1) % order.length;
-        loadProject(order[nextIndex]);
+        loadProject(order[(order.indexOf(currentProject) + 1) % order.length]);
       }, 5200);
     }
 
-    function restartAutoRotate() {
-      clearInterval(autoRotate);
-      startAutoRotate();
-    }
-
     applyProjectContent(projectsData.directspeed);
-    startAutoRotate();
+    startPortfolioRotate();
 
-    /* === ANIMAÇÃO DIRECTSPEED === */
+    /* ============================================================
+       DIRECTSPEED ANIMATION
+       ============================================================ */
     const dsDemoLeads = [
-      { initials: "C", name: "@carla_marketing", msg: "Oi Carla, vi seu perfil..." },
-      { initials: "J", name: "@john.creator",    msg: "Oi John, tudo bem?" },
-      { initials: "A", name: "@ana.business",    msg: "Oi Ana, achei incrível!" },
-      { initials: "M", name: "@marco.ads",       msg: "Oi Marco, vi seu conteúdo..." },
-      { initials: "R", name: "@rafa.creator",    msg: "Oi Rafa, tudo certo?" }
+      { initials:"C", name:"@carla_marketing", msg:"Oi Carla, vi seu perfil..." },
+      { initials:"J", name:"@john.creator",    msg:"Oi John, tudo bem?" },
+      { initials:"A", name:"@ana.business",    msg:"Oi Ana, achei incrível!" },
+      { initials:"M", name:"@marco.ads",       msg:"Oi Marco, vi seu conteúdo..." },
+      { initials:"R", name:"@rafa.creator",    msg:"Oi Rafa, tudo certo?" }
     ];
-
-    const dsDemoList    = document.getElementById("dsDemoList");
-    const dsDemoSent    = document.getElementById("dsDemoSent");
-    const dsPanelTotal  = document.getElementById("dsPanelTotal");
-    const dsPanelSent   = document.getElementById("dsPanelSent");
+    const dsDemoList     = document.getElementById("dsDemoList");
+    const dsDemoSent     = document.getElementById("dsDemoSent");
+    const dsPanelTotal   = document.getElementById("dsPanelTotal");
+    const dsPanelSent    = document.getElementById("dsPanelSent");
     const dsProgressText = document.getElementById("dsProgressText");
     const dsProgressFill = document.getElementById("dsProgressFill");
-    const dsPhoneProgress = document.getElementById("dsPhoneProgress");
-
-    let dsCounter = 0;
-    let dsLeadIndex = 0;
+    const dsPhoneProgress= document.getElementById("dsPhoneProgress");
+    let dsCounter = 0, dsLeadIndex = 0;
     const dsLimit = 20;
 
     function createDsDemoItem(lead, sending) {
@@ -1061,57 +2133,210 @@
           <strong>${lead.name}</strong>
           <span>${sending ? '<span class="ds-typing"><i></i><i></i><i></i></span>' : lead.msg}</span>
         </div>
-        <div class="ds-dm-check">✓</div>
-      `;
+        <div class="ds-dm-check">✓</div>`;
       return item;
     }
 
     function updateDsNumbers() {
       const pct = Math.min((dsCounter / dsLimit) * 100, 100);
-      dsDemoSent.textContent    = dsCounter;
-      dsPanelTotal.textContent  = dsCounter;
-      dsPanelSent.textContent   = dsCounter;
+      dsDemoSent.textContent     = dsCounter;
+      dsPanelTotal.textContent   = dsCounter;
+      dsPanelSent.textContent    = dsCounter;
       dsProgressText.textContent = dsCounter + " / " + dsLimit;
       dsProgressFill.style.width = pct + "%";
-      dsPhoneProgress.style.width = pct + "%";
+      dsPhoneProgress.style.width= pct + "%";
     }
 
     function runDsSend() {
       const lead = dsDemoLeads[dsLeadIndex % dsDemoLeads.length];
-      dsLeadIndex++;
-      dsCounter++;
-
-      if (dsCounter > dsLimit) {
-        dsCounter = 1;
-        dsDemoList.innerHTML = "";
-      }
-
+      dsLeadIndex++; dsCounter++;
+      if (dsCounter > dsLimit) { dsCounter = 1; dsDemoList.innerHTML = ""; }
       updateDsNumbers();
-
       const item = createDsDemoItem(lead, true);
       dsDemoList.insertBefore(item, dsDemoList.firstChild);
-
       setTimeout(() => {
-        item.classList.remove("sending");
-        item.classList.add("done");
-        const msgEl = item.querySelector(".ds-dm-info span");
-        if (msgEl) msgEl.textContent = lead.msg;
+        item.classList.replace("sending", "done");
+        const sp = item.querySelector(".ds-dm-info span");
+        if (sp) sp.textContent = lead.msg;
       }, 900);
-
-      while (dsDemoList.children.length > 6) {
-        dsDemoList.removeChild(dsDemoList.lastChild);
-      }
+      while (dsDemoList.children.length > 6) dsDemoList.removeChild(dsDemoList.lastChild);
     }
 
-    // Seed inicial
-    dsDemoLeads.slice(0, 3).forEach(lead => {
-      dsDemoList.appendChild(createDsDemoItem(lead, false));
-    });
+    dsDemoLeads.slice(0, 3).forEach(lead => dsDemoList.appendChild(createDsDemoItem(lead, false)));
+    setTimeout(() => { runDsSend(); setInterval(runDsSend, 2200); }, 1000);
 
-    setTimeout(() => {
-      runDsSend();
-      setInterval(runDsSend, 2200);
-    }, 1000);
+    /* ============================================================
+       CRM HUB EMBED — SCALE
+       ============================================================ */
+    /* scaleCrmMockup: in crm-mode the hub fills full width naturally, no scaling */
+    function scaleCrmMockup() { /* no-op in crm-mode layout */ }
+
+    /* ============================================================
+       CRM HUB EMBED — CAROUSEL  (plain vars, no IIFE)
+       ============================================================ */
+    const HUB_SCREENS = [
+      { id:'dashboard',       label:'Dashboard Operacional',   navKey:'dashboard' },
+      { id:'entregas',        label:'Entregas & Compromissos',  navKey:'entregas' },
+      { id:'influenciadoras', label:'Influenciadoras',          navKey:'influenciadoras' },
+      { id:'calendario',      label:'Calendário de Entregas',   navKey:'calendario' },
+      { id:'financeiro',      label:'Financeiro',               navKey:'financeiro' },
+      { id:'roi',             label:'ROI — Retorno por Collab', navKey:'roi' },
+      { id:'ia',              label:'IA Interativa',            navKey:'ia' },
+      { id:'lembretes',       label:'Lembretes Automáticos',    navKey:'lembretes' },
+    ];
+
+    var hubCurrent = 0;
+    var hubTimer   = null;
+    var hubStarted = false;
+
+    /* Build dot indicators */
+    (function() {
+      const cont = document.getElementById('crmIndicators');
+      if (!cont) return;
+      HUB_SCREENS.forEach(function(s, i) {
+        var dot = document.createElement('div');
+        dot.className = 'screen-ind' + (i === 0 ? ' active' : '');
+        dot.style.cssText = 'width:20px;height:4px;border-radius:99px;background:rgba(255,255,255,.2);cursor:pointer;transition:all .3s;';
+        dot.addEventListener('click', function() { hubGoTo(i); hubResetTimer(); });
+        cont.appendChild(dot);
+      });
+    })();
+
+    function hubGoTo(idx) {
+      var prev = hubCurrent;
+      hubCurrent = idx;
+
+      document.querySelectorAll('.hub-screen').forEach(function(s) {
+        s.classList.remove('active', 'leaving');
+        s.style.pointerEvents = 'none';
+      });
+
+      var prevEl = document.getElementById('screen-' + HUB_SCREENS[prev].id);
+      if (prevEl) {
+        prevEl.classList.add('leaving');
+        setTimeout(function() { prevEl.classList.remove('leaving'); }, 600);
+      }
+      var nextEl = document.getElementById('screen-' + HUB_SCREENS[idx].id);
+      if (nextEl) { nextEl.classList.add('active'); nextEl.style.pointerEvents = 'auto'; }
+
+      /* sidebar highlight */
+      document.querySelectorAll('.nav-item').forEach(function(n) { n.classList.remove('active'); });
+      var nav = document.querySelector('[data-screen="' + HUB_SCREENS[idx].navKey + '"]');
+      if (nav) nav.classList.add('active');
+
+      /* dot indicators */
+      document.querySelectorAll('#crmIndicators div').forEach(function(el, i) {
+        el.style.background = i === idx ? 'linear-gradient(90deg,#e91e8c,#8b5cf6)' : 'rgba(255,255,255,.2)';
+        el.style.width      = i === idx ? '32px' : '20px';
+      });
+
+      /* label */
+      var lbl = document.getElementById('crmScreenLabel');
+      if (lbl) {
+        lbl.style.opacity = '0';
+        setTimeout(function() {
+          lbl.textContent  = HUB_SCREENS[idx].label;
+          lbl.style.opacity = '1';
+        }, 200);
+      }
+
+      /* per-screen animations */
+      if (HUB_SCREENS[idx].id === 'dashboard') hubAnimDashboard();
+      if (HUB_SCREENS[idx].id === 'roi')       hubAnimRoi();
+      if (HUB_SCREENS[idx].id === 'ia')        hubAnimIA();
+    }
+
+    function hubResetTimer() {
+      if (hubTimer) clearInterval(hubTimer);
+      hubTimer = setInterval(function() {
+        hubGoTo((hubCurrent + 1) % HUB_SCREENS.length);
+      }, 4800);
+    }
+
+    function hubStart() {
+      if (hubStarted) { hubResetTimer(); return; }
+      hubStarted = true;
+      hubGoTo(0);
+      hubResetTimer();
+    }
+
+    /* ── Dashboard counters ── */
+    function hubAnimDashboard() {
+      var targets = { d1:247, d2:'R$ 18.4k', d3:89, d4:63, d5:'R$ 142k', d6:34, d7:8, d8:12 };
+      Object.entries(targets).forEach(function([id, target]) {
+        var el = document.getElementById(id);
+        if (!el) return;
+        if (typeof target === 'string') { setTimeout(function(){ el.textContent = target; }, 400); return; }
+        var val = 0, inc = target / (900/16);
+        var t = setInterval(function() {
+          val += inc;
+          if (val >= target) { val = target; clearInterval(t); }
+          el.textContent = Math.round(val);
+        }, 16);
+      });
+    }
+
+    /* ── ROI counters ── */
+    function hubAnimRoi() {
+      setTimeout(function() {
+        [{val:'roiVal1',num:'+284%',bar:'roiBar1',w:75},
+         {val:'roiVal2',num:'R$ 9.4k',bar:'roiBar2',w:60},
+         {val:'roiVal3',num:'R$ 37,80',bar:'roiBar3',w:45},
+         {val:'roiVal4',num:'294',bar:'roiBar4',w:85}
+        ].forEach(function(d) {
+          var vEl = document.getElementById(d.val);
+          var bEl = document.getElementById(d.bar);
+          if (bEl) bEl.style.width = d.w + '%';
+          if (vEl) setTimeout(function(){ vEl.textContent = d.num; }, 400);
+        });
+      }, 200);
+    }
+
+    /* ── IA conversation ── */
+    var iaConvo = [
+      { type:'user',   text:'Quais entregas estão atrasadas?' },
+      { type:'typing', text:'' },
+      { type:'bot',    text:'📋 Encontrei 97 entregas atrasadas. As mais críticas: @marinasouza_ (1 dia), @leticia.rocha (5 dias), @camilaferreira_ (5 dias). Deseja enviar lembretes automáticos?' },
+      { type:'user',   text:'Sim, envia lembretes para todas!' },
+      { type:'typing', text:'' },
+      { type:'bot',    text:'✅ Lembretes enviados! 97 influenciadoras notificadas via WhatsApp. Taxa de resposta média: 68%. Acompanhe em tempo real.' },
+    ];
+    var iaIdx = 0, iaPlaying = false;
+
+    function hubAnimIA() {
+      if (iaPlaying) return;
+      iaPlaying = true;
+      var msgs = document.getElementById('iaMessages');
+      if (!msgs) { iaPlaying = false; return; }
+      msgs.innerHTML = '<div class="ia-msg bot">👋 Olá! Sou a IA do Chantê Hub. Posso ajudar com pagamentos, entregas e gestão das influenciadoras.</div>';
+      iaIdx = 0;
+      hubPlayIA();
+    }
+
+    function hubPlayIA() {
+      if (iaIdx >= iaConvo.length) { iaPlaying = false; return; }
+      var msg = iaConvo[iaIdx++];
+      var msgs = document.getElementById('iaMessages');
+      if (!msgs) { iaPlaying = false; return; }
+      setTimeout(function() {
+        if (msg.type === 'typing') {
+          var el = document.createElement('div');
+          el.className = 'ia-msg bot typing';
+          el.innerHTML = '<div class="ia-typing"><i></i><i></i><i></i></div>';
+          msgs.appendChild(el);
+          msgs.scrollTop = msgs.scrollHeight;
+          setTimeout(function() { el.remove(); hubPlayIA(); }, 1200);
+          return;
+        }
+        var el = document.createElement('div');
+        el.className = 'ia-msg ' + msg.type;
+        el.textContent = msg.text;
+        msgs.appendChild(el);
+        msgs.scrollTop = msgs.scrollHeight;
+        hubPlayIA();
+      }, msg.type === 'typing' ? 200 : 600);
+    }
+
   </script>
 </body>
 </html>

@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfólio | Lucas Silva</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: #070b14; color: #ffffff; overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; }
+    button, input, textarea { font-family: inherit; }
+
+    :root {
+      --bg: #070b14;
+      --card: rgba(255, 255, 255, 0.08);
+      --border: rgba(255, 255, 255, 0.14);
+      --text-muted: #a6b0c3;
+      --primary: #00e0ff;
+      --secondary: #8b5cf6;
+      --success: #22c55e;
+      --dark-card: rgba(10, 16, 30, 0.92);
+    }
+
+    .background-glow {
+      position: fixed; inset: 0; z-index: -1;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(0, 224, 255, 0.25), transparent 30%),
+        radial-gradient(circle at 80% 10%, rgba(139, 92, 246, 0.25), transparent 35%),
+        radial-gradient(circle at 50% 90%, rgba(34, 197, 94, 0.14), transparent 35%),
+        #070b14;
+    }
+
+    header {
+      width: 100%; position: fixed; top: 0; z-index: 50;
+      backdrop-filter: blur(16px);
+      background: rgba(7, 11, 20, 0.72);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav {
+      max-width: 1180px; margin: 0 auto; padding: 18px 22px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo { font-weight: 900; font-size: 20px; letter-spacing: -0.5px; }
+    .logo span { color: var(--primary); }
+    .nav-links { display: flex; gap: 24px; color: var(--text-muted); font-size: 14px; }
+    .nav-links a { transition: 0.25s ease; }
+    .nav-links a:hover { color: var(--primary); }
+
+    .hero {
+      max-width: 1180px; margin: 0 auto;
+      min-height: 100vh; padding: 150px 22px 80px;
+      display: grid; grid-template-columns: 1.2fr 0.8fr;
+      align-items: center; gap: 60px;
+    }
+    .badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 14px; border: 1px solid var(--border); border-radius: 999px;
+      color: var(--primary); background: rgba(0, 224, 255, 0.08);
+      font-size: 14px; margin-bottom: 24px;
+    }
+    .hero h1 {
+      font-size: clamp(40px, 7vw, 76px); line-height: 1;
+      letter-spacing: -3px; margin-bottom: 24px;
+    }
+    .hero h1 span {
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text; color: transparent;
+    }
+    .hero p { font-size: 18px; line-height: 1.7; color: var(--text-muted); max-width: 650px; margin-bottom: 32px; }
+    .hero-buttons { display: flex; flex-wrap: wrap; gap: 14px; }
+    .btn { padding: 14px 20px; border-radius: 14px; font-weight: 800; border: 1px solid var(--border); transition: 0.3s ease; cursor: pointer; font-size: 15px; }
+    .btn-primary { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: #06101c; border: none; }
+    .btn-secondary { color: #fff; background: rgba(255, 255, 255, 0.06); }
+    .btn:hover { transform: translateY(-3px); filter: brightness(1.1); }
+
+    .photo-card {
+      position: relative; border: 1px solid var(--border); background: var(--card);
+      border-radius: 32px; padding: 22px;
+      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.35);
+    }
+    .photo-box {
+      width: 100%; aspect-ratio: 1 / 1.15; border-radius: 26px; overflow: hidden;
+      background: linear-gradient(135deg, rgba(0,224,255,0.2), rgba(139,92,246,0.2));
+      display: flex; align-items: center; justify-content: center;
+      border: 1px dashed rgba(255, 255, 255, 0.25);
+    }
+    .photo-box img { width: 100%; height: 100%; object-fit: cover; }
+    .floating-card {
+      position: absolute; bottom: 35px; left: -30px;
+      background: rgba(7, 11, 20, 0.85); border: 1px solid var(--border);
+      backdrop-filter: blur(16px); padding: 16px; border-radius: 18px;
+      max-width: 220px; line-height: 1.5; color: var(--text-muted);
+    }
+    .floating-card strong { color: var(--primary); }
+
+    section { max-width: 1180px; margin: 0 auto; padding: 80px 22px; }
+    .section-title { margin-bottom: 42px; }
+    .section-title small { color: var(--primary); font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+    .section-title h2 { margin-top: 10px; font-size: clamp(32px, 5vw, 48px); letter-spacing: -1.5px; }
+    .section-title p { margin-top: 14px; color: var(--text-muted); max-width: 720px; line-height: 1.7; }
+
+    .projects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .project-card {
+      position: relative; overflow: hidden;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 28px; padding: 28px; transition: 0.35s ease; min-height: 280px;
+    }
+    .project-card:hover { transform: translateY(-8px); border-color: rgba(0, 224, 255, 0.5); box-shadow: 0 25px 70px rgba(0, 224, 255, 0.08); }
+    .project-icon {
+      width: 54px; height: 54px; border-radius: 16px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      display: flex; align-items: center; justify-content: center;
+      color: #06101c; font-weight: 900; font-size: 22px; margin-bottom: 22px;
+    }
+    .project-card h3 { font-size: 24px; margin-bottom: 12px; }
+    .project-card p { color: var(--text-muted); line-height: 1.7; margin-bottom: 22px; }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag { font-size: 12px; padding: 7px 10px; border-radius: 999px; background: rgba(255, 255, 255, 0.08); color: #d9e2f1; border: 1px solid rgba(255, 255, 255, 0.08); }
+
+    .project-showcase { display: grid; grid-template-columns: 360px 1fr; gap: 28px; align-items: stretch; }
+    .project-tabs { display: flex; flex-direction: column; gap: 16px; }
+    .project-tab {
+      width: 100%; border: 1px solid var(--border); background: rgba(255, 255, 255, 0.05);
+      border-radius: 22px; padding: 18px; display: flex; gap: 16px; align-items: center;
+      text-align: left; color: #fff; cursor: pointer; transition: 0.3s ease;
+    }
+    .project-tab:hover { transform: translateY(-4px); border-color: rgba(0, 224, 255, 0.45); background: rgba(255, 255, 255, 0.08); }
+    .project-tab.active { border-color: rgba(139, 92, 246, 0.55); background: linear-gradient(135deg, rgba(0, 224, 255, 0.10), rgba(139, 92, 246, 0.14)); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25); }
+    .tab-badge { min-width: 48px; height: 48px; border-radius: 14px; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: #071019; font-weight: 900; display: flex; align-items: center; justify-content: center; }
+    .project-tab strong { display: block; font-size: 18px; margin-bottom: 4px; }
+    .project-tab small { color: var(--text-muted); font-size: 13px; line-height: 1.5; }
+
+    .project-viewer {
+      border: 1px solid var(--border);
+      background: linear-gradient(145deg, rgba(7,11,20,0.95), rgba(10,16,30,0.92));
+      border-radius: 30px; padding: 24px;
+      display: grid; grid-template-columns: 1.1fr 0.9fr;
+      gap: 24px; overflow: hidden; min-height: 540px; position: relative;
+    }
+    .project-viewer::before {
+      content: ""; position: absolute; inset: 0;
+      background:
+        radial-gradient(circle at top right, rgba(139, 92, 246, 0.13), transparent 25%),
+        radial-gradient(circle at bottom left, rgba(0, 224, 255, 0.10), transparent 25%);
+      pointer-events: none;
+    }
+
+    .viewer-image-box {
+      position: relative; border-radius: 24px; overflow: hidden;
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+      min-height: 420px; display: flex; align-items: center; justify-content: center;
+    }
+    .viewer-glow {
+      position: absolute; width: 280px; height: 280px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,224,255,0.18), transparent 60%);
+      filter: blur(20px); animation: pulseGlow 4s ease-in-out infinite;
+    }
+    .project-preview-img {
+      width: 100%; height: 100%; object-fit: cover; border-radius: 22px;
+      position: relative; z-index: 1; animation: floatImage 4.5s ease-in-out infinite;
+    }
+    .viewer-content { position: relative; z-index: 1; display: flex; flex-direction: column; justify-content: center; }
+    .viewer-top { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 18px; }
+    .viewer-category, .viewer-status { display: inline-flex; align-items: center; padding: 8px 12px; border-radius: 999px; font-size: 12px; font-weight: 800; }
+    .viewer-category { color: var(--primary); background: rgba(0, 224, 255, 0.10); border: 1px solid rgba(0, 224, 255, 0.18); }
+    .viewer-status { color: #d9e2f1; background: rgba(255, 255, 255, 0.07); border: 1px solid rgba(255,255,255,0.10); }
+    .viewer-content h3 { font-size: clamp(28px, 4vw, 42px); line-height: 1.1; margin-bottom: 16px; }
+    .viewer-content p { color: var(--text-muted); line-height: 1.75; }
+    #projectDescription { margin-bottom: 20px; }
+    .viewer-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 24px; }
+    .viewer-tag { padding: 8px 12px; border-radius: 999px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.10); color: #e8eef9; font-size: 13px; font-weight: 700; }
+    .viewer-highlights { display: grid; gap: 14px; margin-bottom: 24px; }
+    .highlight-card { padding: 16px; border-radius: 18px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); }
+    .highlight-card strong { display: block; margin-bottom: 8px; color: #fff; }
+    .highlight-card p { margin: 0; font-size: 14px; }
+    .viewer-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+    @keyframes floatImage { 0% { transform: translateY(0px); } 50% { transform: translateY(-6px); } 100% { transform: translateY(0px); } }
+    @keyframes pulseGlow { 0% { transform: scale(1); opacity: 0.7; } 50% { transform: scale(1.08); opacity: 1; } 100% { transform: scale(1); opacity: 0.7; } }
+    .fade-switch { animation: fadeSwitch 0.35s ease; }
+    @keyframes fadeSwitch { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+    .timeline { display: grid; gap: 18px; }
+    .timeline-item { display: grid; grid-template-columns: 140px 1fr; gap: 24px; padding: 24px; border-radius: 24px; background: var(--card); border: 1px solid var(--border); }
+    .timeline-year { color: var(--primary); font-weight: 900; }
+    .timeline-content h3 { margin-bottom: 8px; }
+    .timeline-content p { color: var(--text-muted); line-height: 1.7; }
+
+    .skills-slider { width: 100%; overflow: hidden; padding: 18px 0; margin-bottom: 42px; position: relative; }
+    .skills-slider::before, .skills-slider::after { content: ""; position: absolute; top: 0; width: 120px; height: 100%; z-index: 2; pointer-events: none; }
+    .skills-slider::before { left: 0; background: linear-gradient(90deg, #070b14, transparent); }
+    .skills-slider::after { right: 0; background: linear-gradient(270deg, #070b14, transparent); }
+    .skills-track { display: flex; gap: 14px; width: max-content; animation: slideSkills 26s linear infinite; }
+    .skills-slider:hover .skills-track { animation-play-state: paused; }
+    .skills-track span { white-space: nowrap; padding: 13px 18px; border-radius: 999px; color: #e7eefc; font-weight: 700; font-size: 14px; background: rgba(255, 255, 255, 0.08); border: 1px solid var(--border); box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.02); }
+    @keyframes slideSkills { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    .cases-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-bottom: 52px; }
+    .case-card { position: relative; overflow: hidden; padding: 28px; border-radius: 28px; background: linear-gradient(145deg, rgba(255,255,255,0.09), rgba(255,255,255,0.04)); border: 1px solid var(--border); transition: 0.35s ease; }
+    .case-card::before { content: ""; position: absolute; inset: -1px; background: radial-gradient(circle at top right, rgba(0, 224, 255, 0.18), transparent 35%); opacity: 0; transition: 0.35s ease; }
+    .case-card:hover { transform: translateY(-8px); border-color: rgba(0, 224, 255, 0.45); box-shadow: 0 25px 70px rgba(0, 224, 255, 0.08); }
+    .case-card:hover::before { opacity: 1; }
+    .case-number { position: relative; z-index: 1; color: var(--primary); font-weight: 900; margin-bottom: 18px; font-size: 14px; letter-spacing: 1px; }
+    .case-card h3 { position: relative; z-index: 1; font-size: 22px; margin-bottom: 12px; }
+    .case-card p { position: relative; z-index: 1; color: var(--text-muted); line-height: 1.7; margin-bottom: 20px; }
+    .case-result { position: relative; z-index: 1; padding: 14px; border-radius: 16px; background: rgba(0, 224, 255, 0.08); border: 1px solid rgba(0, 224, 255, 0.16); color: #dceeff; line-height: 1.6; font-size: 14px; }
+    .case-result strong { color: var(--primary); }
+
+    .clients-area { padding: 28px; border-radius: 28px; background: rgba(255, 255, 255, 0.06); border: 1px solid var(--border); }
+    .clients-area p { color: var(--text-muted); margin-bottom: 20px; }
+    .clients-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+    .client-logo { min-height: 74px; border-radius: 18px; display: flex; align-items: center; justify-content: center; text-align: center; padding: 14px; font-weight: 900; color: #ffffff; background: rgba(255, 255, 255, 0.07); border: 1px solid var(--border); transition: 0.3s ease; }
+    .client-logo:hover { transform: translateY(-4px); color: var(--primary); border-color: rgba(0, 224, 255, 0.45); background: rgba(0, 224, 255, 0.08); }
+
+    .contact-card { text-align: center; padding: 48px 28px; border-radius: 32px; border: 1px solid var(--border); background: linear-gradient(135deg, rgba(0, 224, 255, 0.12), rgba(139, 92, 246, 0.12)); }
+    .contact-card h2 { font-size: clamp(30px, 5vw, 46px); margin-bottom: 14px; }
+    .contact-card p { color: var(--text-muted); line-height: 1.7; margin-bottom: 28px; }
+    footer { padding: 30px 22px; text-align: center; color: var(--text-muted); border-top: 1px solid var(--border); }
+
+    .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s ease; }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+
+    /* ===============================
+       DIRECTSPEED DEMO
+       =============================== */
+    .directspeed-demo {
+      position: relative; z-index: 2; width: 100%; min-height: 420px; padding: 18px;
+      display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 18px; align-items: center;
+      border-radius: 22px;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(139, 92, 246, 0.18), transparent 35%),
+        radial-gradient(circle at 80% 80%, rgba(0, 224, 255, 0.13), transparent 35%),
+        rgba(7, 11, 20, 0.92);
+      overflow: hidden;
+    }
+    .ds-demo-copy { position: relative; z-index: 3; }
+    .ds-demo-badge { display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border-radius: 999px; color: #a78bfa; background: rgba(139, 92, 246, 0.12); border: 1px solid rgba(139, 92, 246, 0.28); font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 14px; }
+    .ds-demo-badge i { width: 7px; height: 7px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 12px #22c55e; animation: dsBlink 1.4s ease-in-out infinite; font-style: normal; display: inline-block; }
+    .ds-demo-copy h4 { font-size: clamp(24px, 3vw, 34px); line-height: 1.05; margin-bottom: 14px; }
+    .ds-demo-copy h4 span { background: linear-gradient(90deg, var(--primary), var(--secondary)); -webkit-background-clip: text; color: transparent; }
+    .ds-demo-copy p { color: var(--text-muted); font-size: 14px; line-height: 1.7; margin-bottom: 18px; }
+    .ds-demo-stats { display: flex; gap: 18px; }
+    .ds-demo-stats div { display: flex; flex-direction: column; gap: 3px; }
+    .ds-demo-stats strong { color: var(--primary); font-size: 26px; font-weight: 900; }
+    .ds-demo-stats small { color: var(--text-muted); font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+    .ds-demo-stage { position: relative; display: flex; align-items: center; justify-content: center; min-height: 360px; }
+    .ds-demo-panel { width: 220px; position: absolute; left: 0; top: 50%; transform: translateY(-50%); background: rgba(13, 18, 32, 0.96); border: 1px solid rgba(0, 224, 255, 0.18); border-radius: 18px; overflow: hidden; box-shadow: 0 22px 70px rgba(0, 0, 0, 0.45); z-index: 4; }
+    .ds-panel-top { padding: 12px; background: rgba(255, 255, 255, 0.04); border-bottom: 1px solid rgba(255, 255, 255, 0.08); display: flex; align-items: center; justify-content: space-between; }
+    .ds-panel-top div { display: flex; align-items: center; gap: 6px; }
+    .ds-panel-top strong { font-size: 12px; }
+    .ds-panel-top strong span { color: var(--primary); }
+    .ds-plane { color: var(--primary); }
+    .ds-panel-top small { padding: 4px 8px; border-radius: 999px; background: rgba(34, 197, 94, 0.12); color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.22); font-size: 9px; font-weight: 800; animation: dsPulse 1.5s ease-in-out infinite; }
+    .ds-panel-user { display: flex; align-items: center; gap: 9px; padding: 12px; }
+    .ds-user-avatar { width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: #06101c; display: flex; align-items: center; justify-content: center; font-weight: 900; }
+    .ds-panel-user strong { display: block; font-size: 12px; }
+    .ds-panel-user span { color: var(--text-muted); font-size: 10px; }
+    .ds-panel-numbers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; padding: 0 12px 12px; }
+    .ds-panel-numbers div { padding: 8px 6px; text-align: center; border-radius: 10px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.07); }
+    .ds-panel-numbers strong { display: block; font-size: 18px; color: var(--primary); }
+    .ds-panel-numbers span { color: var(--text-muted); font-size: 8px; text-transform: uppercase; }
+    .ds-mini-progress { padding: 0 12px 12px; }
+    .ds-progress-label { display: flex; justify-content: space-between; color: var(--text-muted); font-size: 9px; margin-bottom: 5px; }
+    .ds-progress-bg { height: 5px; background: rgba(255, 255, 255, 0.08); border-radius: 999px; overflow: hidden; }
+    .ds-progress-bg div { height: 100%; width: 0%; background: linear-gradient(90deg, var(--primary), #22c55e); border-radius: 999px; transition: 0.45s ease; }
+    .ds-message-preview { margin: 0 12px 12px; padding: 10px; border-radius: 12px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.08); }
+    .ds-message-preview small { color: var(--text-muted); font-size: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .ds-message-preview p { margin-top: 5px; color: #e8eef9; font-size: 11px; line-height: 1.5; }
+    .ds-message-preview span { color: #a78bfa; font-weight: 800; }
+
+    .ds-demo-connector { position: absolute; left: 210px; color: var(--primary); font-size: 30px; z-index: 5; animation: dsArrowMove 1.4s ease-in-out infinite; }
+    .ds-demo-phone { position: absolute; right: 0; width: 220px; height: 360px; border-radius: 30px; overflow: hidden; background: #0d1220; border: 2px solid rgba(255, 255, 255, 0.12); box-shadow: 0 28px 80px rgba(0, 0, 0, 0.55); }
+    .ds-phone-notch { width: 78px; height: 22px; background: #070b14; border-radius: 0 0 16px 16px; margin: 0 auto; }
+    .ds-phone-header { padding: 12px 14px; display: flex; align-items: center; gap: 9px; border-bottom: 1px solid rgba(255, 255, 255, 0.07); }
+    .ds-ig-icon { width: 27px; height: 27px; border-radius: 9px; background: linear-gradient(135deg, #f77737, #e1306c, #833ab4); display: flex; align-items: center; justify-content: center; }
+    .ds-phone-header strong { display: block; font-size: 12px; }
+    .ds-phone-header span { display: block; color: var(--text-muted); font-size: 9px; }
+    .ds-phone-progress { height: 4px; margin: 7px 14px; background: rgba(255, 255, 255, 0.08); border-radius: 999px; overflow: hidden; }
+    .ds-phone-progress div { height: 100%; width: 0%; background: linear-gradient(90deg, var(--primary), #22c55e); transition: 0.45s ease; }
+    .ds-demo-list { padding: 4px 0; }
+    .ds-demo-dm { display: flex; align-items: center; gap: 8px; padding: 9px 13px; opacity: 0; transform: translateX(-10px); animation: dsDmIn 0.35s ease forwards; }
+    .ds-demo-dm.sending { background: rgba(139, 92, 246, 0.10); }
+    .ds-dm-avatar { width: 31px; height: 31px; border-radius: 50%; background: linear-gradient(135deg, #667eea, #764ba2); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 12px; font-weight: 900; flex-shrink: 0; position: relative; }
+    .ds-dm-avatar::after { content: ""; position: absolute; right: 0; bottom: 0; width: 8px; height: 8px; border-radius: 50%; background: #22c55e; border: 2px solid #0d1220; }
+    .ds-dm-info { flex: 1; min-width: 0; }
+    .ds-dm-info strong { display: block; font-size: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .ds-dm-info span { display: block; color: var(--text-muted); font-size: 9px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .ds-dm-check { color: #22c55e; font-size: 12px; transform: scale(0); transition: 0.25s ease; }
+    .ds-demo-dm.done .ds-dm-check { transform: scale(1); }
+    .ds-typing { display: inline-flex; gap: 3px; }
+    .ds-typing i { width: 4px; height: 4px; border-radius: 50%; background: #a78bfa; animation: dsTyping 1s infinite; font-style: normal; display: inline-block; }
+    .ds-typing i:nth-child(2) { animation-delay: 0.15s; }
+    .ds-typing i:nth-child(3) { animation-delay: 0.3s; }
+
+    @keyframes dsBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+    @keyframes dsPulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.26); } 50% { box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); } }
+    @keyframes dsArrowMove { 0%, 100% { transform: translateX(0); opacity: 0.6; } 50% { transform: translateX(7px); opacity: 1; } }
+    @keyframes dsDmIn { to { opacity: 1; transform: translateX(0); } }
+    @keyframes dsTyping { 0%, 80%, 100% { transform: translateY(0); opacity: 0.4; } 40% { transform: translateY(-4px); opacity: 1; } }
+
+    @media (max-width: 1000px) {
+      .project-showcase { grid-template-columns: 1fr; }
+      .project-viewer { grid-template-columns: 1fr; }
+      .viewer-image-box { min-height: 300px; }
+      .directspeed-demo { grid-template-columns: 1fr; }
+      .ds-demo-stage { min-height: 390px; }
+      .ds-demo-panel { left: 5%; }
+      .ds-demo-phone { right: 5%; }
+      .ds-demo-connector { left: 48%; }
+    }
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; padding-top: 130px; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .floating-card { left: 20px; bottom: 20px; }
+      .timeline-item { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .cases-grid { grid-template-columns: 1fr; }
+      .clients-grid { grid-template-columns: repeat(2, 1fr); }
+      .skills-slider::before, .skills-slider::after { width: 50px; }
+    }
+    @media (max-width: 700px) {
+      section { padding: 65px 18px; }
+      .hero { padding-left: 18px; padding-right: 18px; }
+      .project-tab { padding: 16px; }
+      .tab-badge { min-width: 42px; height: 42px; }
+      .project-viewer { padding: 18px; border-radius: 24px; }
+      .clients-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 650px) {
+      .directspeed-demo { padding: 14px; }
+      .ds-demo-stage { min-height: 620px; display: grid; gap: 16px; }
+      .ds-demo-panel, .ds-demo-phone, .ds-demo-connector { position: relative; left: auto; right: auto; top: auto; transform: none; margin: 0 auto; }
+      .ds-demo-connector { transform: rotate(90deg); }
+    }
+
+    /* ===============================
+       REFINO VISUAL — VERSÃO MAIS ELEGANTE
+       =============================== */
+
+    .hero h1 {
+      max-width: 760px;
+    }
+
+    .hero p {
+      max-width: 620px;
+    }
+
+    .projects-compact-section {
+      padding-top: 50px;
+      padding-bottom: 55px;
+    }
+
+    .projects-compact-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .compact-project-card {
+      min-height: 170px;
+      padding: 20px;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.055);
+      border: 1px solid rgba(255,255,255,0.10);
+      transition: 0.28s ease;
+    }
+
+    .compact-project-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(0, 224, 255, 0.34);
+      background: rgba(0, 224, 255, 0.065);
+    }
+
+    .compact-project-card span {
+      display: inline-flex;
+      margin-bottom: 14px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      color: var(--primary);
+      background: rgba(0, 224, 255, 0.09);
+      border: 1px solid rgba(0, 224, 255, 0.16);
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.7px;
+    }
+
+    .compact-project-card h3 {
+      font-size: 18px;
+      margin-bottom: 9px;
+    }
+
+    .compact-project-card p {
+      color: var(--text-muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .project-showcase {
+      grid-template-columns: 295px 1fr;
+      gap: 20px;
+    }
+
+    .project-tabs {
+      gap: 12px;
+    }
+
+    .project-tab {
+      border-radius: 18px;
+      padding: 14px;
+      gap: 12px;
+    }
+
+    .tab-badge {
+      min-width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      font-size: 13px;
+    }
+
+    .project-tab strong {
+      font-size: 16px;
+    }
+
+    .project-tab small {
+      font-size: 12px;
+    }
+
+    .project-viewer {
+      grid-template-columns: 1fr 0.72fr;
+      gap: 18px;
+      min-height: 455px;
+      padding: 18px;
+      border-radius: 26px;
+    }
+
+    .viewer-image-box {
+      min-height: 350px;
+      border-radius: 20px;
+    }
+
+    .viewer-glow {
+      width: 220px;
+      height: 220px;
+    }
+
+    .viewer-content {
+      justify-content: center;
+      transition: opacity 0.24s ease, transform 0.24s ease;
+      will-change: opacity, transform;
+    }
+
+    .viewer-image-box {
+      transition: opacity 0.24s ease, transform 0.24s ease;
+      will-change: opacity, transform;
+    }
+
+    .viewer-content.is-switching,
+    .viewer-image-box.is-switching {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+
+    .viewer-top {
+      margin-bottom: 14px;
+    }
+
+    .viewer-category,
+    .viewer-status {
+      padding: 7px 10px;
+      font-size: 11px;
+    }
+
+    .viewer-content h3 {
+      font-size: clamp(26px, 3vw, 36px);
+      margin-bottom: 12px;
+    }
+
+    .viewer-content p {
+      line-height: 1.65;
+      font-size: 15px;
+    }
+
+    #projectDescription {
+      margin-bottom: 18px;
+    }
+
+    .viewer-tags {
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .viewer-tag {
+      padding: 7px 10px;
+      font-size: 12px;
+    }
+
+    .viewer-actions .btn {
+      padding: 12px 16px;
+      font-size: 14px;
+      border-radius: 12px;
+    }
+
+    .directspeed-demo {
+      min-height: 350px;
+      padding: 14px;
+      grid-template-columns: 0.78fr 1.22fr;
+      gap: 12px;
+      border-radius: 18px;
+    }
+
+    .ds-demo-copy h4 {
+      font-size: clamp(22px, 2.4vw, 28px);
+      margin-bottom: 10px;
+    }
+
+    .ds-demo-copy p {
+      font-size: 13px;
+      line-height: 1.6;
+      margin-bottom: 14px;
+    }
+
+    .ds-demo-badge {
+      font-size: 10px;
+      padding: 6px 10px;
+      margin-bottom: 12px;
+    }
+
+    .ds-demo-stats strong {
+      font-size: 22px;
+    }
+
+    .ds-demo-stage {
+      min-height: 315px;
+    }
+
+    .ds-demo-panel {
+      width: 190px;
+      border-radius: 16px;
+    }
+
+    .ds-panel-top,
+    .ds-panel-user {
+      padding: 10px;
+    }
+
+    .ds-panel-numbers {
+      padding: 0 10px 10px;
+      gap: 6px;
+    }
+
+    .ds-panel-numbers div {
+      padding: 7px 5px;
+    }
+
+    .ds-message-preview {
+      margin: 0 10px 10px;
+      padding: 8px;
+    }
+
+    .ds-demo-connector {
+      left: 180px;
+      font-size: 25px;
+    }
+
+    .ds-demo-phone {
+      width: 190px;
+      height: 315px;
+      border-radius: 26px;
+    }
+
+    .ds-phone-header {
+      padding: 10px 12px;
+    }
+
+    .ds-demo-dm {
+      padding: 8px 11px;
+    }
+
+    /* A classe antiga não é mais usada no JS; fica neutra para evitar animação no container inteiro. */
+    .fade-switch {
+      animation: none !important;
+    }
+
+    @media (max-width: 1000px) {
+      .project-showcase {
+        grid-template-columns: 1fr;
+      }
+
+      .project-viewer {
+        grid-template-columns: 1fr;
+      }
+
+      .projects-compact-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .directspeed-demo {
+        grid-template-columns: 1fr;
+      }
+
+      .ds-demo-stage {
+        min-height: 360px;
+      }
+
+      .ds-demo-panel {
+        left: 8%;
+      }
+
+      .ds-demo-phone {
+        right: 8%;
+      }
+
+      .ds-demo-connector {
+        left: 48%;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .projects-compact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .project-viewer {
+        min-height: auto;
+      }
+
+      .viewer-image-box {
+        min-height: 300px;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="background-glow"></div>
+
+  <header>
+    <nav class="nav">
+      <div class="logo">Lucas<span>.</span></div>
+      <div class="nav-links">
+        <a href="#sobre">Sobre</a>
+        <a href="#projetos">Base técnica</a>
+        <a href="#showcase-projects">Sistemas</a>
+        <a href="#jornada">Jornada</a>
+        <a href="#skills">Skills</a>
+        <a href="#contato">Contato</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="hero" id="sobre">
+    <div class="hero-content reveal">
+      <div class="badge">Analista de Sistemas • Automação • Operações Digitais</div>
+      <h1>Eu crio sistemas e automações para <span>transformar operação em resultado.</span></h1>
+      <p>Sou Lucas Silva. Construo soluções digitais para empresas que precisam organizar processos, ganhar velocidade comercial e enxergar a operação com clareza. Minha entrega une visão técnica, execução prática e foco em crescimento.</p>
+      <div class="hero-buttons">
+        <a href="#showcase-projects" class="btn btn-primary">Ver meus sistemas</a>
+        <a href="#contato" class="btn btn-secondary">Conversar comigo</a>
+      </div>
+    </div>
+
+    <div class="photo-card reveal">
+      <div class="photo-box">
+        <img src="minha-foto.jpg.png" alt="Foto de Lucas Silva">
+      </div>
+      <div class="floating-card">
+        <strong>Portfólio profissional</strong><br>
+        Automação, dados e crescimento operacional.
+      </div>
+    </div>
+  </main>
+
+  <section id="projetos" class="projects-compact-section">
+    <div class="section-title reveal">
+      <small>Base técnica</small>
+      <h2>Projetos e competências que sustentam minha execução</h2>
+      <p>
+        Além dos sistemas em destaque, minha base vem de projetos técnicos, integrações,
+        automações e organização de dados aplicados em operações reais.
+      </p>
+    </div>
+
+    <div class="projects-compact-grid">
+      <div class="compact-project-card reveal">
+        <span>PACS</span>
+        <h3>PACS Hospitalar</h3>
+        <p>Fluxo digital para exames de imagem, servidor Orthanc, Worklist e visualizadores DICOM.</p>
+      </div>
+
+      <div class="compact-project-card reveal">
+        <span>HUBS</span>
+        <h3>Hubs de Integração</h3>
+        <p>Conexão entre sistemas, organização de fluxos de dados, APIs e automações operacionais.</p>
+      </div>
+
+      <div class="compact-project-card reveal">
+        <span>WPP</span>
+        <h3>Disparo WhatsApp</h3>
+        <p>Estruturas de mensagens, lembretes e comunicação comercial com mais controle.</p>
+      </div>
+
+      <div class="compact-project-card reveal">
+        <span>FIN</span>
+        <h3>Controle Financeiro</h3>
+        <p>Dashboards, indicadores, entradas, saídas e visão clara para tomada de decisão.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="showcase-projects">
+    <div class="section-title reveal">
+      <small>Sistemas em destaque</small>
+      <h2>Soluções que mostram como eu transformo processo em produto</h2>
+      <p>Interfaces, automações e painéis criados para acelerar prospecção, reduzir falhas manuais e dar mais controle para marcas e operações digitais.</p>
+    </div>
+
+    <div class="project-showcase reveal">
+      <div class="project-tabs">
+        <button class="project-tab active" data-project="directspeed">
+          <span class="tab-badge">01</span>
+          <div><strong>DirectSpeed</strong><small>Prospecção e automação no Instagram</small></div>
+        </button>
+        <button class="project-tab" data-project="wapi">
+          <span class="tab-badge">02</span>
+          <div><strong>W-API</strong><small>Lembretes automáticos via WhatsApp</small></div>
+        </button>
+        <button class="project-tab" data-project="crm">
+          <span class="tab-badge">03</span>
+          <div><strong>CRM para Marcas</strong><small>Dashboard operacional para gestão de influenciadoras</small></div>
+        </button>
+      </div>
+
+      <div class="project-viewer">
+        <div class="viewer-image-box">
+          <div class="viewer-glow"></div>
+
+          <!-- Animação DirectSpeed -->
+          <div id="directspeedDemo" class="directspeed-demo">
+            <div class="ds-demo-copy">
+              <span class="ds-demo-badge"><i></i> Automação ativa</span>
+              <h4>Envie DMs no <span>piloto automático</span></h4>
+              <p>DirectSpeed organiza abordagens no Instagram, automatiza mensagens, controla limites e acelera a prospecção comercial.</p>
+              <div class="ds-demo-stats">
+                <div><strong id="dsDemoSent">0</strong><small>msgs enviadas</small></div>
+                <div><strong>68%</strong><small>taxa de resposta</small></div>
+              </div>
+            </div>
+
+            <div class="ds-demo-stage">
+              <div class="ds-demo-panel">
+                <div class="ds-panel-top">
+                  <div><span class="ds-plane">✈</span><strong>Direct<span>Speed</span></strong></div>
+                  <small>Enviando</small>
+                </div>
+                <div class="ds-panel-user">
+                  <div class="ds-user-avatar">L</div>
+                  <div><strong>Lucas Silva</strong><span>@lucas_silva</span></div>
+                </div>
+                <div class="ds-panel-numbers">
+                  <div><strong id="dsPanelTotal">0</strong><span>Total</span></div>
+                  <div><strong id="dsPanelSent">0</strong><span>Enviados</span></div>
+                  <div><strong>0</strong><span>Erros</span></div>
+                </div>
+                <div class="ds-mini-progress">
+                  <div class="ds-progress-label">
+                    <span>Limite diário</span>
+                    <span id="dsProgressText">0 / 20</span>
+                  </div>
+                  <div class="ds-progress-bg"><div id="dsProgressFill"></div></div>
+                </div>
+                <div class="ds-message-preview">
+                  <small>MSG 1 — Template</small>
+                  <p>Oi <span>{user}</span>, tudo bem? Vi seu perfil e achei incrível.</p>
+                </div>
+              </div>
+
+              <div class="ds-demo-connector"><span>→</span></div>
+
+              <div class="ds-demo-phone">
+                <div class="ds-phone-notch"></div>
+                <div class="ds-phone-header">
+                  <div class="ds-ig-icon">◎</div>
+                  <div><strong>Mensagens</strong><span>Instagram Direct</span></div>
+                </div>
+                <div class="ds-phone-progress"><div id="dsPhoneProgress"></div></div>
+                <div id="dsDemoList" class="ds-demo-list"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Imagem para outros projetos -->
+          <img id="projectImage" class="project-preview-img" src="" alt="Preview do projeto" style="display: none;">
+        </div>
+
+        <div class="viewer-content">
+          <div class="viewer-top">
+            <span id="projectCategory" class="viewer-category">Automação Comercial</span>
+            <span id="projectStatus" class="viewer-status">Projeto ativo</span>
+          </div>
+          <h3 id="projectTitle">DirectSpeed</h3>
+          <p id="projectDescription">Ferramenta voltada para prospecção no Instagram, com foco em automação de mensagens, organização de templates e ganho de velocidade na abordagem comercial.</p>
+          <div id="projectTags" class="viewer-tags">
+            <span class="viewer-tag">Instagram</span>
+            <span class="viewer-tag">Automação</span>
+            <span class="viewer-tag">Prospecção</span>
+            <span class="viewer-tag">Templates</span>
+          </div>
+          <div class="viewer-actions">
+            <a href="#contato" class="btn btn-primary">Conversar sobre projeto</a>
+            <a href="#skills" class="btn btn-secondary">Ver competências</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="jornada">
+    <div class="section-title reveal">
+      <small>Jornada</small>
+      <h2>Da operação técnica à construção de soluções</h2>
+      <p>Minha trajetória une experiência prática em tecnologia, suporte, infraestrutura, análise de sistemas e negócios digitais.</p>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item reveal">
+        <div class="timeline-year">TI Hospitalar</div>
+        <div class="timeline-content"><h3>Suporte, infraestrutura e sistemas</h3><p>Atuação com redes, servidores, usuários, equipamentos, indicadores, backups, documentação técnica e melhoria de processos internos.</p></div>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="timeline-year">Sistemas</div>
+        <div class="timeline-content"><h3>Análise e desenvolvimento de soluções</h3><p>Criação de projetos para resolver problemas reais, conectando tecnologia com necessidade operacional e visão de negócio.</p></div>
+      </div>
+      <div class="timeline-item reveal">
+        <div class="timeline-year">Digital</div>
+        <div class="timeline-content"><h3>Marketing, automação e escala</h3><p>Aplicação de sistemas, automação e processos em operações digitais, com foco em performance, vendas e organização.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="section-title reveal">
+      <small>Skills & Cases</small>
+      <h2>Competências aplicadas em projetos reais</h2>
+      <p>Mais do que habilidades isoladas, meu foco está em aplicar tecnologia, automação e estratégia para resolver problemas, organizar processos e gerar resultado.</p>
+    </div>
+    <div class="skills-slider reveal">
+      <div class="skills-track">
+        <span>Análise de Sistemas</span><span>Automação</span><span>Infraestrutura</span><span>Servidores</span><span>Integrações</span><span>Marketing Digital</span><span>Funis</span><span>CRM</span><span>Dashboards</span><span>Processos</span><span>WhatsApp</span><span>Gestão Financeira</span>
+        <span>Análise de Sistemas</span><span>Automação</span><span>Infraestrutura</span><span>Servidores</span><span>Integrações</span><span>Marketing Digital</span><span>Funis</span><span>CRM</span><span>Dashboards</span><span>Processos</span><span>WhatsApp</span><span>Gestão Financeira</span>
+      </div>
+    </div>
+    <div class="cases-grid reveal">
+      <div class="case-card">
+        <div class="case-number">CASE 01</div>
+        <h3>DirectSpeed</h3>
+        <p>Sistema para acelerar prospecção comercial no Instagram, organizando mensagens, templates, cadência de abordagem e operação de contatos.</p>
+        <div class="case-result"><strong>Resultado:</strong> Mais velocidade na abordagem e maior controle sobre a operação comercial.</div>
+      </div>
+      <div class="case-card">
+        <div class="case-number">CASE 02</div>
+        <h3>W-API</h3>
+        <p>Automação de mensagens via WhatsApp para lembretes, comunicação recorrente e acompanhamento de entregas com influenciadoras.</p>
+        <div class="case-result"><strong>Resultado:</strong> Redução de falhas manuais e comunicação mais previsível.</div>
+      </div>
+      <div class="case-card">
+        <div class="case-number">CASE 03</div>
+        <h3>CRM para Marcas</h3>
+        <p>Dashboard operacional para centralizar vendas, financeiro, entregas, demandas, links, integrações e gestão de influenciadoras.</p>
+        <div class="case-result"><strong>Resultado:</strong> Visão clara da operação e tomada de decisão mais rápida.</div>
+      </div>
+    </div>
+    <div class="clients-area reveal">
+      <p>Projetos, frentes e operações onde apliquei minhas soluções:</p>
+      <div class="clients-grid">
+        <div class="client-logo">HPEG</div>
+        <div class="client-logo">Chantê Beauty</div>
+        <div class="client-logo">DirectSpeed</div>
+        <div class="client-logo">W-API</div>
+        <div class="client-logo">CRM para Marcas</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contato">
+    <div class="contact-card reveal">
+      <h2>Precisa organizar, automatizar ou escalar uma operação?</h2>
+      <p>Posso ajudar a transformar processos soltos em sistemas, painéis e automações mais claros, rápidos e operacionais.</p>
+      <a class="btn btn-primary" href="https://wa.me/5591982765501" target="_blank">Falar com Lucas</a>
+    </div>
+  </section>
+
+  <footer>© 2026 Lucas Silva. Portfólio pessoal.</footer>
+
+  <script>
+    /* === REVEAL ON SCROLL === */
+    const revealElements = document.querySelectorAll('.reveal');
+    function revealOnScroll() {
+      const windowHeight = window.innerHeight;
+      revealElements.forEach((el) => {
+        if (el.getBoundingClientRect().top < windowHeight - 100) {
+          el.classList.add('active');
+        }
+      });
+    }
+    window.addEventListener('scroll', revealOnScroll);
+    revealOnScroll();
+
+    /* === DADOS DOS PROJETOS === */
+    const projectsData = {
+      directspeed: {
+        title: "DirectSpeed",
+        category: "Automação Comercial",
+        status: "Apresentação interativa",
+        type: "demo",
+        description: "Sistema de prospecção para Instagram criado para acelerar abordagens, organizar templates, controlar limites diários e dar previsibilidade para operações comerciais que dependem de volume, cadência e acompanhamento.",
+        tags: ["Instagram", "Direct", "Automação", "Prospecção"],
+        image: null
+      },
+      wapi: {
+        title: "W-API",
+        category: "Mensageria Automatizada",
+        status: "Automação configurável",
+        type: "image",
+        description: "Automação de mensagens via WhatsApp para lembretes, entregas e comunicação recorrente. A solução reduz falhas manuais e mantém o relacionamento operacional mais previsível.",
+        tags: ["WhatsApp", "API", "Lembretes", "Automação"],
+        image: "wapi-preview.png"
+      },
+      crm: {
+        title: "CRM para Marcas",
+        category: "Dashboard Operacional",
+        status: "Gestão em tempo real",
+        type: "image",
+        description: "Dashboard para centralizar vendas, entregas, financeiro, demandas, links, integrações e gestão de influenciadoras. A proposta é transformar dados soltos em visão clara para decisão.",
+        tags: ["CRM", "Dashboard", "Influenciadoras", "Gestão"],
+        image: "crm-preview.png"
+      }
+    };
+
+    /* === SHOWCASE INTERATIVO === */
+    const projectTabs = document.querySelectorAll(".project-tab");
+    const projectImage = document.getElementById("projectImage");
+    const projectCategory = document.getElementById("projectCategory");
+    const projectStatus = document.getElementById("projectStatus");
+    const projectTitle = document.getElementById("projectTitle");
+    const projectDescription = document.getElementById("projectDescription");
+    const projectTags = document.getElementById("projectTags");
+    const viewerContent = document.querySelector(".viewer-content");
+    const viewerImageBox = document.querySelector(".viewer-image-box");
+    const directspeedDemo = document.getElementById("directspeedDemo");
+
+    let currentProject = "directspeed";
+    let autoRotate;
+    let transitionTimeout;
+
+    function applyProjectContent(project) {
+      if (project.type === "demo") {
+        directspeedDemo.style.display = "grid";
+        projectImage.style.display = "none";
+      } else {
+        directspeedDemo.style.display = "none";
+        projectImage.style.display = "block";
+        projectImage.src = project.image;
+        projectImage.alt = "Preview do projeto " + project.title;
+      }
+
+      projectCategory.textContent = project.category;
+      projectStatus.textContent = project.status;
+      projectTitle.textContent = project.title;
+      projectDescription.textContent = project.description;
+
+      projectTags.innerHTML = "";
+      project.tags.forEach(tag => {
+        const span = document.createElement("span");
+        span.className = "viewer-tag";
+        span.textContent = tag;
+        projectTags.appendChild(span);
+      });
+    }
+
+    function loadProject(projectKey) {
+      const project = projectsData[projectKey];
+      if (!project) return;
+
+      currentProject = projectKey;
+
+      projectTabs.forEach(tab => {
+        tab.classList.toggle("active", tab.dataset.project === projectKey);
+      });
+
+      clearTimeout(transitionTimeout);
+
+      viewerContent.classList.add("is-switching");
+      viewerImageBox.classList.add("is-switching");
+
+      transitionTimeout = setTimeout(() => {
+        applyProjectContent(project);
+
+        requestAnimationFrame(() => {
+          viewerContent.classList.remove("is-switching");
+          viewerImageBox.classList.remove("is-switching");
+        });
+      }, 160);
+    }
+
+    projectTabs.forEach(tab => {
+      tab.addEventListener("click", () => {
+        loadProject(tab.dataset.project);
+        restartAutoRotate();
+      });
+    });
+
+    function startAutoRotate() {
+      const order = ["directspeed", "wapi", "crm"];
+      autoRotate = setInterval(() => {
+        const nextIndex = (order.indexOf(currentProject) + 1) % order.length;
+        loadProject(order[nextIndex]);
+      }, 5200);
+    }
+
+    function restartAutoRotate() {
+      clearInterval(autoRotate);
+      startAutoRotate();
+    }
+
+    applyProjectContent(projectsData.directspeed);
+    startAutoRotate();
+
+    /* === ANIMAÇÃO DIRECTSPEED === */
+    const dsDemoLeads = [
+      { initials: "C", name: "@carla_marketing", msg: "Oi Carla, vi seu perfil..." },
+      { initials: "J", name: "@john.creator",    msg: "Oi John, tudo bem?" },
+      { initials: "A", name: "@ana.business",    msg: "Oi Ana, achei incrível!" },
+      { initials: "M", name: "@marco.ads",       msg: "Oi Marco, vi seu conteúdo..." },
+      { initials: "R", name: "@rafa.creator",    msg: "Oi Rafa, tudo certo?" }
+    ];
+
+    const dsDemoList    = document.getElementById("dsDemoList");
+    const dsDemoSent    = document.getElementById("dsDemoSent");
+    const dsPanelTotal  = document.getElementById("dsPanelTotal");
+    const dsPanelSent   = document.getElementById("dsPanelSent");
+    const dsProgressText = document.getElementById("dsProgressText");
+    const dsProgressFill = document.getElementById("dsProgressFill");
+    const dsPhoneProgress = document.getElementById("dsPhoneProgress");
+
+    let dsCounter = 0;
+    let dsLeadIndex = 0;
+    const dsLimit = 20;
+
+    function createDsDemoItem(lead, sending) {
+      const item = document.createElement("div");
+      item.className = "ds-demo-dm " + (sending ? "sending" : "done");
+      item.innerHTML = `
+        <div class="ds-dm-avatar">${lead.initials}</div>
+        <div class="ds-dm-info">
+          <strong>${lead.name}</strong>
+          <span>${sending ? '<span class="ds-typing"><i></i><i></i><i></i></span>' : lead.msg}</span>
+        </div>
+        <div class="ds-dm-check">✓</div>
+      `;
+      return item;
+    }
+
+    function updateDsNumbers() {
+      const pct = Math.min((dsCounter / dsLimit) * 100, 100);
+      dsDemoSent.textContent    = dsCounter;
+      dsPanelTotal.textContent  = dsCounter;
+      dsPanelSent.textContent   = dsCounter;
+      dsProgressText.textContent = dsCounter + " / " + dsLimit;
+      dsProgressFill.style.width = pct + "%";
+      dsPhoneProgress.style.width = pct + "%";
+    }
+
+    function runDsSend() {
+      const lead = dsDemoLeads[dsLeadIndex % dsDemoLeads.length];
+      dsLeadIndex++;
+      dsCounter++;
+
+      if (dsCounter > dsLimit) {
+        dsCounter = 1;
+        dsDemoList.innerHTML = "";
+      }
+
+      updateDsNumbers();
+
+      const item = createDsDemoItem(lead, true);
+      dsDemoList.insertBefore(item, dsDemoList.firstChild);
+
+      setTimeout(() => {
+        item.classList.remove("sending");
+        item.classList.add("done");
+        const msgEl = item.querySelector(".ds-dm-info span");
+        if (msgEl) msgEl.textContent = lead.msg;
+      }, 900);
+
+      while (dsDemoList.children.length > 6) {
+        dsDemoList.removeChild(dsDemoList.lastChild);
+      }
+    }
+
+    // Seed inicial
+    dsDemoLeads.slice(0, 3).forEach(lead => {
+      dsDemoList.appendChild(createDsDemoItem(lead, false));
+    });
+
+    setTimeout(() => {
+      runDsSend();
+      setInterval(runDsSend, 2200);
+    }, 1000);
+  </script>
+</body>
+</html>
